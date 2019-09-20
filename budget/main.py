@@ -21,7 +21,9 @@ def main():
 
     wb = xlsxwriter.Workbook(output_file_path)
 
-    ws.process_wydatki(excel_file_path, wb)
+    wydatki = ws.process_wydatki(excel_file_path)
+
+    ws.save_wydatki_to_excel(wydatki, wb)
 
     wb.close()
 

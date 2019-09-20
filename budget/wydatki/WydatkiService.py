@@ -33,7 +33,7 @@ kategorie = {
 # =============================================
 
 class WydatkiService:
-    def process_wydatki(self, input_file_path, wb):
+    def process_wydatki(self, input_file_path):
         xslx = pd.ExcelFile(input_file_path)
 
         wydatki = []
@@ -41,7 +41,9 @@ class WydatkiService:
         for tab in kategorie.keys():
             self.process_category(xslx, tab, wydatki)
 
-        self.save_results(wydatki, wb)
+        return wydatki
+
+
 
     @staticmethod
     def process_category(xslx, tab, wydatki):
@@ -53,9 +55,7 @@ class WydatkiService:
                     w = Wydatek(row[col_miesiac], tab, column, row.get(column))
                     wydatki.append(w)
 
-    @staticmethod
-    def save_results(wydatki, wb):
-
+    def save_wydatki_to_excel(self, wydatki, wb):
         wydatki_sheet = wb.add_worksheet("Wydatki")
 
         wydatki_sheet.write(0, 0, "Miesiąc")
