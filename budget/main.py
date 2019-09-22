@@ -22,8 +22,10 @@ def main():
     wb = xlsxwriter.Workbook(output_file_path)
 
     wydatki = ws.process_wydatki(excel_file_path)
+    wydatki_miesiace = ws.process_miesiace(wydatki);
 
     ws.save_wydatki_to_excel(wydatki, wb)
+    ws.save_miesiace_to_excel(wydatki_miesiace, wb)
 
     wb.close()
 

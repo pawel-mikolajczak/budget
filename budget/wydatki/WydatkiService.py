@@ -68,3 +68,17 @@ class WydatkiService:
             wydatki_sheet.write(index, 1, wydatek.kategoria)
             wydatki_sheet.write(index, 2, wydatek.subkategoria)
             wydatki_sheet.write(index, 3, wydatek.kwota)
+
+    def process_miesiace(self, wydatki):
+        miesiace = set()
+        for item in wydatki:
+            miesiace.add(item.miesiac)
+        return miesiace
+
+    def save_miesiace_to_excel(self, wydatki_miesiace, wb):
+        wydatki_sheet = wb.add_worksheet("Miesiące")
+
+        wydatki_sheet.write(0, 0, "Miesiąc")
+
+        for index, miesiac in enumerate(wydatki_miesiace, start=1):
+            wydatki_sheet.write(index, 0, miesiac)
