@@ -54,19 +54,7 @@ class WydatkiService:
                     w = Wydatek(row[col_miesiac], tab, column, row.get(column))
                     wydatki.append(w)
 
-    def save_wydatki_to_excel(self, wydatki, wb):
-        wydatki_sheet = wb.add_worksheet("Wydatki")
 
-        wydatki_sheet.write(0, 0, "Miesiąc")
-        wydatki_sheet.write(0, 1, "Kategoria")
-        wydatki_sheet.write(0, 2, "Subkategoria")
-        wydatki_sheet.write(0, 3, "Kwota")
-
-        for index, wydatek in enumerate(wydatki, start=1):
-            wydatki_sheet.write(index, 0, wydatek.miesiac)
-            wydatki_sheet.write(index, 1, wydatek.kategoria)
-            wydatki_sheet.write(index, 2, wydatek.subkategoria)
-            wydatki_sheet.write(index, 3, wydatek.kwota)
 
     def process_miesiace(self, database):
         return database.select_data("SELECT DISTINCT miesiac FROM wydatki ORDER BY 1 DESC")
@@ -79,16 +67,6 @@ class WydatkiService:
 
     def process_sum_wydatki(self, database):
         return database.select_data("SELECT miesiac, SUM(kwota) [suma] FROM wydatki GROUP BY miesiac ORDER BY 1 DESC")
-
-    def save_data_to_excel(self, records, columns, tab_name, wb):
-        wydatki_sheet = wb.add_worksheet(tab_name)
-
-        for index, col in enumerate(columns):
-            wydatki_sheet.write(0, index, col)
-
-        for rec_i, record in enumerate(records, start=1):
-            for col_i, col_v in enumerate(columns):
-                wydatki_sheet.write(rec_i, col_i, record[col_i])
 
     def store_wydatki(self, wydatki, database):
         for wydatek in wydatki:
