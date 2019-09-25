@@ -28,6 +28,7 @@ kategorie = {
     "Rozrywka": ["Podróże i wyjazdy", "Sport i hobby", "Wyjścia i wydarzenia", "Rozrywka - inne"]
 }
 
+
 # =============================================
 # Wydatki Service
 # =============================================
@@ -42,8 +43,6 @@ class WydatkiService:
             self.process_category(xslx, tab, wydatki)
 
         return wydatki
-
-
 
     @staticmethod
     def process_category(xslx, tab, wydatki):
@@ -82,3 +81,7 @@ class WydatkiService:
 
         for index, miesiac in enumerate(wydatki_miesiace, start=1):
             wydatki_sheet.write(index, 0, miesiac)
+
+    def store_wydatki(self, wydatki, database):
+        for wydatek in wydatki:
+            database.add_wydatek(wydatek.miesiac, wydatek.kategoria, wydatek.subkategoria, wydatek.kwota)
