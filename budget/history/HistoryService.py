@@ -3,14 +3,14 @@ import pandas as pd
 # =============================================
 # constants
 # =============================================
-from budget.wydatki.Wydatek import Wydatek
+from budget.history.HistoryItem import HistoryItem
 
 col_miesiac = "Miesiąc"
 
 # =============================================
 # kategorie
 # =============================================
-kategorie = {
+wydatki_kategorie = {
     "Auto i transport": ["Akcesoria i eksploatacja", "Paliwo", "Parking i opłaty", "Przejazdy", "Serwis i części",
                          "Ubezpieczenie auta", "Auto i transport - inne"],
     "Codzienne wydatki": ["Alkohol", "Jedzenie poza domem", "Kawa", "Papierosy", "Słodycze i ciasta", "Zwierzęta",
@@ -28,36 +28,43 @@ kategorie = {
     "Rozrywka": ["Podróże i wyjazdy", "Sport i hobby", "Wyjścia i wydarzenia", "Rozrywka - inne"]
 }
 
+wplywy_kategorie = {
+    "Wpływy": ["500+", "Odsetki", "Premia", "Wynagrodzenie", "Wypłata kredytu", "Wpływy - inne"]
+}
+
 
 # =============================================
-# Wydatki Service
+# History Service
 # =============================================
 
-class WydatkiService:
-    def process_wydatki(self, input_file_path):
+class HistoryService:
+    def process_items(self, input_file_path, kategorie, typ):
         xslx = pd.ExcelFile(input_file_path)
 
-        wydatki = []
+        items = []
 
         for tab in kategorie.keys():
-            self.process_category(xslx, tab, wydatki)
+            self.process_category(xslx, tab, items, typ)
 
-        return wydatki
+        return items
 
     @staticmethod
-    def process_category(xslx, tab, wydatki):
+    def process_category(xslx, tab, items, typ):
         df = pd.read_excel(xslx, '%s' % tab)
 
         for index, row in df.iterrows():
             for column in row.keys():
                 if column != col_miesiac:
-                    w = Wydatek(row[col_miesiac], tab, column, row.get(column))
-                    wydatki.append(w)
+                    w = HistoryItem(typ, row[col_miesiac], tab, column, row.get(column))
+                    items.append(w)
 
-
+    def store_wydatki(self, wydatki, database):
+        for wydatek in wydatki:
+            database.add_wydatek(wydatek.miesiac, wydatek.kategoria, wydatek.subkategoria, wydatek.kwota)
 
     def process_miesiace(self, database):
-        return database.select_data("SELECT DISTINCT miesiac FROM wydatki UNION SELECT DISTINCT miesiac FROM wplywy ORDER BY 1 DESC")
+        return database.select_data(
+            "SELECT DISTINCT miesiac FROM wydatki UNION SELECT DISTINCT miesiac FROM wplywy ORDER BY 1 DESC")
 
     def process_kategorie(self, database):
         return database.select_data("SELECT DISTINCT kategoria FROM wydatki ORDER BY 1 ASC")
@@ -68,6 +75,9 @@ class WydatkiService:
     def process_sum_wydatki(self, database):
         return database.select_data("SELECT miesiac, SUM(kwota) [suma] FROM wydatki GROUP BY miesiac ORDER BY 1 DESC")
 
-    def store_wydatki(self, wydatki, database):
-        for wydatek in wydatki:
-            database.add_wydatek(wydatek.miesiac, wydatek.kategoria, wydatek.subkategoria, wydatek.kwota)
+    def store_wplywy(self, wplywy, database):
+        for wplyw in wplywy:
+            database.add_wplyw(wplyw.miesiac, wplyw.kategoria, wplyw.subkategoria, wplyw.kwota)
+
+    def process_sum_wplywy(self, database):
+        return database.select_data("SELECT miesiac, SUM(kwota) [suma] FROM wplywy GROUP BY miesiac ORDER BY 1 DESC")

@@ -1,6 +1,5 @@
 import budget.db.DatabaseSupport as db
-import budget.wydatki.WydatkiService as wyd_service
-import budget.wplywy.WplywyService as wpl_service
+import budget.history.HistoryService as hist_service
 import budget.excel.ExcelService as excel_service
 
 # =============================================
@@ -21,8 +20,7 @@ def main():
     # init services
     # ---------------
 
-    wyd = wyd_service.WydatkiService()
-    wpl = wpl_service.WplywyService()
+    hist = hist_service.HistoryService()
     ex = excel_service.ExcelService()
 
     # ---------------
@@ -36,30 +34,30 @@ def main():
     # wydatki
     # ---------------
 
-    wydatki = wyd.process_wydatki(excel_file_path)
-    wyd.store_wydatki(wydatki, database)
+    wydatki = hist.process_items(excel_file_path, hist_service.wydatki_kategorie, "Wydatek")
+    hist.store_wydatki(wydatki, database)
 
     ex.save_item_to_excel(wydatki, "Wydatki")
 
-    ex.save_data_to_excel(wyd.process_kategorie(database), ["Kategoria"], "Kategorie")
-    ex.save_data_to_excel(wyd.process_subkategorie(database), ["Kategoria", "Subkategoria"], "Subkategorie")
-    ex.save_data_to_excel(wyd.process_sum_wydatki(database), ["Miesiąc", "Suma"], "Wydatki SUM")
+    ex.save_data_to_excel(hist.process_kategorie(database), ["Kategoria"], "Kategorie")
+    ex.save_data_to_excel(hist.process_subkategorie(database), ["Kategoria", "Subkategoria"], "Subkategorie")
+    ex.save_data_to_excel(hist.process_sum_wydatki(database), ["Miesiąc", "Suma"], "Wydatki SUM")
 
     # ---------------
     # wplywy
     # ---------------
 
-    wplywy = wpl.process_wplywy(excel_file_path)
-    wpl.store_wplywy(wplywy, database)
+    wplywy = hist.process_items(excel_file_path, hist_service.wplywy_kategorie, "Wpływ")
+    hist.store_wplywy(wplywy, database)
 
     ex.save_item_to_excel(wplywy, "Wpływy")
-    ex.save_data_to_excel(wpl.process_sum_wplywy(database), ["Miesiąc", "Suma"], "Wpływy SUM")
+    ex.save_data_to_excel(hist.process_sum_wplywy(database), ["Miesiąc", "Suma"], "Wpływy SUM")
 
     # ---------------
     # common
     # ---------------
 
-    ex.save_data_to_excel(wyd.process_miesiace(database), ["Miesiąc"], "Miesiące")
+    ex.save_data_to_excel(hist.process_miesiace(database), ["Miesiąc"], "Miesiące")
 
     # ---------------
     # closing
