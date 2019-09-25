@@ -7,19 +7,19 @@ class ExcelService:
     def __init__(self):
         self.wb = xlsxwriter.Workbook(output_file_path)
 
-    def save_wydatki_to_excel(self, wydatki):
-        wydatki_sheet = self.wb.add_worksheet("Wydatki")
+    def save_item_to_excel(self, items, tab_name):
+        sheet = self.wb.add_worksheet(tab_name)
 
-        wydatki_sheet.write(0, 0, "Miesiąc")
-        wydatki_sheet.write(0, 1, "Kategoria")
-        wydatki_sheet.write(0, 2, "Subkategoria")
-        wydatki_sheet.write(0, 3, "Kwota")
+        sheet.write(0, 0, "Miesiąc")
+        sheet.write(0, 1, "Kategoria")
+        sheet.write(0, 2, "Subkategoria")
+        sheet.write(0, 3, "Kwota")
 
-        for index, wydatek in enumerate(wydatki, start=1):
-            wydatki_sheet.write(index, 0, wydatek.miesiac)
-            wydatki_sheet.write(index, 1, wydatek.kategoria)
-            wydatki_sheet.write(index, 2, wydatek.subkategoria)
-            wydatki_sheet.write(index, 3, wydatek.kwota)
+        for index, item in enumerate(items, start=1):
+            sheet.write(index, 0, item.miesiac)
+            sheet.write(index, 1, item.kategoria)
+            sheet.write(index, 2, item.subkategoria)
+            sheet.write(index, 3, item.kwota)
 
     def save_data_to_excel(self, records, columns, tab_name):
         wydatki_sheet = self.wb.add_worksheet(tab_name)
