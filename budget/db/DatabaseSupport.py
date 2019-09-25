@@ -24,6 +24,7 @@ class DatabaseSupport:
 
             self.create_table('wydatki.sql')
             self.create_table('wplywy.sql')
+            self.create_table('konta.sql')
 
         except sqlite3.Error as error:
             print("Error while connecting to sqlite", error)
@@ -54,6 +55,16 @@ class DatabaseSupport:
         count = cursor.execute(sqlite_insert_query)
         self.sqliteConnection.commit()
         print("Wpływ {}, {}, {}, {} added: {} rows".format(miesiac, kategoria, subkategoria, kwota, cursor.rowcount))
+        cursor.close()
+
+    def add_konto(self, konto, data, opis, kwota, bilans):
+        cursor = self.sqliteConnection.cursor()
+
+        sqlite_insert_query = "INSERT INTO konta ('konto', 'data', 'opis', 'kwota', 'bilans') VALUES ('{}','{}','{}',{},{})".format(konto, data, opis, kwota, bilans)
+
+        count = cursor.execute(sqlite_insert_query)
+        self.sqliteConnection.commit()
+        print("Konto {}, {}, {}, {}, {} added: {} rows".format(konto, data, opis, kwota, bilans, cursor.rowcount))
         cursor.close()
 
     def select_data(self, query):

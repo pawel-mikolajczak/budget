@@ -1,19 +1,12 @@
 import budget.db.DatabaseSupport as db
 import budget.history.HistoryService as hist_service
+import budget.accounts.AccountsService as acc_service
 import budget.excel.ExcelService as excel_service
 
 # =============================================
 # constants
 # =============================================
 excel_file_path = r'C:\Users\pabll\Desktop\budżet\budżet.xlsx'
-
-
-# =============================================
-# konta
-# =============================================
-konta = ["K - Inteligo Paweł", "K - Inteligo Agatka", "K - Gotówka PLN", "K - Auto", "K - Poduszka bezpieczeństwa",
-         "K - Wakacje", "K - Filip", "K - Tomek", "K - Santander"]
-
 
 def main():
     # ---------------
@@ -22,6 +15,7 @@ def main():
 
     hist = hist_service.HistoryService()
     ex = excel_service.ExcelService()
+    acc = acc_service.AccountsService()
 
     # ---------------
     # database
@@ -52,6 +46,13 @@ def main():
 
     ex.save_item_to_excel(wplywy, "Wpływy")
     ex.save_data_to_excel(hist.process_sum_wplywy(database), ["Miesiąc", "Suma"], "Wpływy SUM")
+
+    # ---------------
+    # konta
+    # ---------------
+
+    konta = acc.process_items(excel_file_path)
+    acc.store_konta(konta, database)
 
     # ---------------
     # common
