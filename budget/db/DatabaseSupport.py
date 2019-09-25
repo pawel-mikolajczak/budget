@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 
 class DatabaseSupport:
@@ -8,7 +9,10 @@ class DatabaseSupport:
 
     def initDatabase(self):
         try:
-            self.sqliteConnection = sqlite3.connect('inmemorydatabase.db')
+            dbfile = 'inmemorydatabase.db'
+            if os.path.exists(dbfile):
+                os.remove(dbfile)
+            self.sqliteConnection = sqlite3.connect(dbfile)
             cursor = self.sqliteConnection.cursor()
             print("Database created and Successfully Connected to SQLite")
 
