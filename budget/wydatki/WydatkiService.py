@@ -71,6 +71,12 @@ class WydatkiService:
     def process_miesiace(self, database):
         return database.select_data("SELECT DISTINCT miesiac FROM wydatki ORDER BY 1 DESC")
 
+    def process_kategorie(self, database):
+        return database.select_data("SELECT DISTINCT kategoria FROM wydatki ORDER BY 1 ASC")
+
+    def process_subkategorie(self, database):
+        return database.select_data("SELECT DISTINCT kategoria, subkategoria FROM wydatki ORDER BY 1 ASC, 2 ASC")
+
     def save_miesiace_to_excel(self, wydatki_miesiace, wb):
         wydatki_sheet = wb.add_worksheet("Miesiące")
 
@@ -78,6 +84,24 @@ class WydatkiService:
 
         for index, miesiac in enumerate(wydatki_miesiace, start=1):
             wydatki_sheet.write(index, 0, miesiac[0])
+
+    def save_kategorie_to_excel(self, wydatki_kategorie, wb):
+        wydatki_sheet = wb.add_worksheet("Kategorie")
+
+        wydatki_sheet.write(0, 0, "Kategoria")
+
+        for index, kategoria in enumerate(wydatki_kategorie, start=1):
+            wydatki_sheet.write(index, 0, kategoria[0])
+
+    def save_subkategorie_to_excel(self, wydatki_subkategorie, wb):
+        wydatki_sheet = wb.add_worksheet("Subkategorie")
+
+        wydatki_sheet.write(0, 0, "Kategoria")
+        wydatki_sheet.write(0, 1, "Subkategoria")
+
+        for index, kategoria in enumerate(wydatki_subkategorie, start=1):
+            wydatki_sheet.write(index, 0, kategoria[0])
+            wydatki_sheet.write(index, 1, kategoria[1])
 
     def store_wydatki(self, wydatki, database):
         for wydatek in wydatki:

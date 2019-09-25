@@ -27,10 +27,15 @@ def main():
 
     wydatki = ws.process_wydatki(excel_file_path)
     ws.store_wydatki(wydatki, database)
+
     wydatki_miesiace = ws.process_miesiace(database)
+    wydatki_kategorie = ws.process_kategorie(database)
+    wydatki_subkategorie = ws.process_subkategorie(database)
 
     ws.save_wydatki_to_excel(wydatki, wb)
     ws.save_miesiace_to_excel(wydatki_miesiace, wb)
+    ws.save_kategorie_to_excel(wydatki_kategorie, wb)
+    ws.save_subkategorie_to_excel(wydatki_subkategorie, wb)
 
     wb.close()
     database.closeConnection()
