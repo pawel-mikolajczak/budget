@@ -44,3 +44,6 @@ class WplywyService:
     def store_wplywy(self, wplywy, database):
         for wplyw in wplywy:
             database.add_wplyw(wplyw.miesiac, wplyw.kategoria, wplyw.subkategoria, wplyw.kwota)
+
+    def process_sum_wplywy(self, database):
+        return database.select_data("SELECT miesiac, SUM(kwota) [suma] FROM wplywy GROUP BY miesiac ORDER BY 1 DESC")

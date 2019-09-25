@@ -53,6 +53,7 @@ def main():
     wpl.store_wplywy(wplywy, database)
 
     ex.save_item_to_excel(wplywy, "Wpływy")
+    ex.save_data_to_excel(wpl.process_sum_wplywy(database), ["Miesiąc", "Suma"], "Wpływy SUM")
 
     # ---------------
     # common
