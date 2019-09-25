@@ -32,6 +32,31 @@ wplywy_kategorie = {
     "Wpływy": ["500+", "Odsetki", "Premia", "Wynagrodzenie", "Wypłata kredytu", "Wpływy - inne"]
 }
 
+wydatki_kategorie_pivot = {
+    "Rachunki comiesięczne": ["Czynsz i wynajem", "Garaż", "Gaz", "Ogrzewanie", "Prąd", "Spłaty rat",
+                              "Subskrypcje, abonamenty", "TV, internet, telefon", "Ubezpieczenia",
+                              "Woda i kanalizacja", "Przedszkole i opiekunka", "Zajęcia dodatkowe"],
+    "Rachunki inne": ["Opłaty i odsetki", "Podatki", "Ubezpieczenia", "Płatności - inne", "Ubezpieczenie domu"],
+    "Życie codzienne": ["Jedzenie poza domem", "Kawa", "Zwierzęta", "Żywność i chemia domowa",
+                        "Codzienne wydatki - inne"],
+    "Życie zachcianki": ["Alkohol", "Papierosy", "Słodycze i ciasta", "Wyjścia i wydarzenia", "Rozrywka - inne"],
+    "Auto comiesięczne": ["Akcesoria i eksploatacja", "Paliwo", "Parking i opłaty", "Przejazdy",
+                          "Auto i transport - inne"],
+    "Auto co roku": ["Serwis i części", "Ubezpieczenie auta"],
+    "Dzieci stałe": ["Akcesoria dziecięce", "Pampersy"],
+    "Dzieci zachcianki": ["Art. dziecięce i zabawki"],
+    "Dzieci nieprzewidziane": ["Szkoła i wyprawka", "Dzieci - inne"],
+    "Sport i hobby": ["Decoupage + szycie", "Sport i hobby"],
+    "Zdrowie i uroda": ["Lekarz / apteka", "Zdrowie i uroda"],
+    "Inne": ["Wypłata gotówki", "Bez kategorii"],
+    "Podróże": ["Podróże i wyjazdy"],
+    "Ubrania i obuwie": ["Ciuchy i buty", "Odzież i obuwie"],
+    "Prezenty": ["Prezenty i wsparcie"],
+    "Osobiste": ["Edukacja", "Multimedia, książki i prasa", "Osobiste - inne"],
+    "Elektronika": ["Elektronika", "RTV i AGD"],
+    "Dom": ["Akcesoria i wyposażenie", "Meble", "Narzędzia", "Remont i ogród", "Usługi domowe", "Dom - inne"]
+}
+
 
 # =============================================
 # History Service
