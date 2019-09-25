@@ -40,3 +40,16 @@ class AccountsService:
     def store_konta(self, konta, database):
         for konto in konta:
             database.add_konto(konto.typ, konto.data, konto.opis, konto.kwota, konto.bilans)
+
+    def process_sum_konta(self, database):
+        return database.select_data("SELECT "
+                                    "   DATE(data, 'Start of month') [miesiac], "
+                                    "   konto, "
+                                    "   SUM(kwota) [suma] "
+                                    "FROM konta "
+                                    "GROUP BY DATE(data, 'Start of month'), konto "
+                                    "ORDER BY 1 DESC, 2 ASC")
+
+    def process_konta(self, database):
+        return database.select_data("SELECT DISTINCT konto "
+                                    "FROM konta ORDER BY 1 ASC")

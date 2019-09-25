@@ -54,6 +54,9 @@ def main():
     konta = acc.process_items(excel_file_path)
     acc.store_konta(konta, database)
 
+    ex.save_data_to_excel(acc.process_sum_konta(database), ["Miesiąc", "Konto", "Suma"], "SUM Konta")
+    ex.save_data_to_excel(acc.process_konta(database), ["Konto"], "Konta")
+
     # ---------------
     # common
     # ---------------
