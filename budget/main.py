@@ -1,8 +1,7 @@
-from xlwt import Workbook
 import xlsxwriter
 
-import budget.wydatki.WydatkiService as wyd_service
 import budget.db.DatabaseSupport as db
+import budget.wydatki.WydatkiService as wyd_service
 
 # =============================================
 # constants
@@ -31,11 +30,13 @@ def main():
     wydatki_miesiace = ws.process_miesiace(database)
     wydatki_kategorie = ws.process_kategorie(database)
     wydatki_subkategorie = ws.process_subkategorie(database)
+    wydatki_sum = ws.process_sum_wydatki(database)
 
     ws.save_wydatki_to_excel(wydatki, wb)
-    ws.save_miesiace_to_excel(wydatki_miesiace, wb)
-    ws.save_kategorie_to_excel(wydatki_kategorie, wb)
-    ws.save_subkategorie_to_excel(wydatki_subkategorie, wb)
+    ws.save_data_to_excel(wydatki_miesiace, ["Miesiąc"], "Miesiące", wb)
+    ws.save_data_to_excel(wydatki_kategorie, ["Kategoria"], "Kategorie", wb)
+    ws.save_data_to_excel(wydatki_subkategorie, ["Kategoria", "Subkategoria"], "Subkategorie", wb)
+    ws.save_data_to_excel(wydatki_sum, ["Miesiąc", "Suma"], "Wydatki SUM", wb)
 
     wb.close()
     database.closeConnection()

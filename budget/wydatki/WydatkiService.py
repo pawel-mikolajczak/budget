@@ -77,31 +77,18 @@ class WydatkiService:
     def process_subkategorie(self, database):
         return database.select_data("SELECT DISTINCT kategoria, subkategoria FROM wydatki ORDER BY 1 ASC, 2 ASC")
 
-    def save_miesiace_to_excel(self, wydatki_miesiace, wb):
-        wydatki_sheet = wb.add_worksheet("Miesiące")
+    def process_sum_wydatki(self, database):
+        return database.select_data("SELECT miesiac, SUM(kwota) [suma] FROM wydatki GROUP BY miesiac ORDER BY 1 DESC")
 
-        wydatki_sheet.write(0, 0, "Miesiąc")
+    def save_data_to_excel(self, records, columns, tab_name, wb):
+        wydatki_sheet = wb.add_worksheet(tab_name)
 
-        for index, miesiac in enumerate(wydatki_miesiace, start=1):
-            wydatki_sheet.write(index, 0, miesiac[0])
+        for index, col in enumerate(columns):
+            wydatki_sheet.write(0, index, col)
 
-    def save_kategorie_to_excel(self, wydatki_kategorie, wb):
-        wydatki_sheet = wb.add_worksheet("Kategorie")
-
-        wydatki_sheet.write(0, 0, "Kategoria")
-
-        for index, kategoria in enumerate(wydatki_kategorie, start=1):
-            wydatki_sheet.write(index, 0, kategoria[0])
-
-    def save_subkategorie_to_excel(self, wydatki_subkategorie, wb):
-        wydatki_sheet = wb.add_worksheet("Subkategorie")
-
-        wydatki_sheet.write(0, 0, "Kategoria")
-        wydatki_sheet.write(0, 1, "Subkategoria")
-
-        for index, kategoria in enumerate(wydatki_subkategorie, start=1):
-            wydatki_sheet.write(index, 0, kategoria[0])
-            wydatki_sheet.write(index, 1, kategoria[1])
+        for rec_i, record in enumerate(records, start=1):
+            for col_i, col_v in enumerate(columns):
+                wydatki_sheet.write(rec_i, col_i, record[col_i])
 
     def store_wydatki(self, wydatki, database):
         for wydatek in wydatki:
