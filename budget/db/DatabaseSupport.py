@@ -45,6 +45,14 @@ class DatabaseSupport:
         print("Wydatek {}, {}, {}, {} added: {} rows".format(miesiac, kategoria, subkategoria, kwota, cursor.rowcount))
         cursor.close()
 
+    def select_data(self, query):
+        cursor = self.sqliteConnection.cursor()
+        cursor.execute(query)
+        records = cursor.fetchall()
+        print("Total rows for query '{}' are: {}".format(query, len(records)))
+        cursor.close()
+        return records
+
     def closeConnection(self):
         if (self.sqliteConnection):
             self.sqliteConnection.close()

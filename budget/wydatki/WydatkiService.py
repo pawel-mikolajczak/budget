@@ -68,11 +68,8 @@ class WydatkiService:
             wydatki_sheet.write(index, 2, wydatek.subkategoria)
             wydatki_sheet.write(index, 3, wydatek.kwota)
 
-    def process_miesiace(self, wydatki):
-        miesiace = set()
-        for item in wydatki:
-            miesiace.add(item.miesiac)
-        return miesiace
+    def process_miesiace(self, database):
+        return database.select_data("SELECT DISTINCT miesiac FROM wydatki ORDER BY 1 DESC")
 
     def save_miesiace_to_excel(self, wydatki_miesiace, wb):
         wydatki_sheet = wb.add_worksheet("Miesiące")
@@ -80,7 +77,7 @@ class WydatkiService:
         wydatki_sheet.write(0, 0, "Miesiąc")
 
         for index, miesiac in enumerate(wydatki_miesiace, start=1):
-            wydatki_sheet.write(index, 0, miesiac)
+            wydatki_sheet.write(index, 0, miesiac[0])
 
     def store_wydatki(self, wydatki, database):
         for wydatek in wydatki:

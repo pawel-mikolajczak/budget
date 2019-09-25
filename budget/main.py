@@ -27,7 +27,7 @@ def main():
 
     wydatki = ws.process_wydatki(excel_file_path)
     ws.store_wydatki(wydatki, database)
-    wydatki_miesiace = ws.process_miesiace(wydatki)
+    wydatki_miesiace = ws.process_miesiace(database)
 
     ws.save_wydatki_to_excel(wydatki, wb)
     ws.save_miesiace_to_excel(wydatki_miesiace, wb)
