@@ -40,7 +40,7 @@ def main():
     wyd.store_wydatki(wydatki, database)
 
     ex.save_item_to_excel(wydatki, "Wydatki")
-    ex.save_data_to_excel(wyd.process_miesiace(database), ["Miesiąc"], "Miesiące")
+
     ex.save_data_to_excel(wyd.process_kategorie(database), ["Kategoria"], "Kategorie")
     ex.save_data_to_excel(wyd.process_subkategorie(database), ["Kategoria", "Subkategoria"], "Subkategorie")
     ex.save_data_to_excel(wyd.process_sum_wydatki(database), ["Miesiąc", "Suma"], "Wydatki SUM")
@@ -53,6 +53,12 @@ def main():
     wpl.store_wplywy(wplywy, database)
 
     ex.save_item_to_excel(wplywy, "Wpływy")
+
+    # ---------------
+    # common
+    # ---------------
+
+    ex.save_data_to_excel(wyd.process_miesiace(database), ["Miesiąc"], "Miesiące")
 
     # ---------------
     # closing

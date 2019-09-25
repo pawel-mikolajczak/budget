@@ -57,7 +57,7 @@ class WydatkiService:
 
 
     def process_miesiace(self, database):
-        return database.select_data("SELECT DISTINCT miesiac FROM wydatki ORDER BY 1 DESC")
+        return database.select_data("SELECT DISTINCT miesiac FROM wydatki UNION SELECT DISTINCT miesiac FROM wplywy ORDER BY 1 DESC")
 
     def process_kategorie(self, database):
         return database.select_data("SELECT DISTINCT kategoria FROM wydatki ORDER BY 1 ASC")
