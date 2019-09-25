@@ -75,6 +75,9 @@ class HistoryService:
     def process_sum_wydatki(self, database):
         return database.select_data("SELECT miesiac, SUM(kwota) [suma] FROM wydatki GROUP BY miesiac ORDER BY 1 DESC")
 
+    def process_wydatki_vs_wplywy(selfself, database):
+        return database.select_data("SELECT x.miesiac, x.typ, SUM(x.kwota) [suma] FROM (SELECT 'Wplywy' [typ], miesiac, kwota FROM wplywy UNION SELECT 'Wydatki' [typ], miesiac, kwota FROM wydatki) x GROUP BY x.miesiac, x.typ ORDER BY 1 DESC, 2 ASC")
+
     def store_wplywy(self, wplywy, database):
         for wplyw in wplywy:
             database.add_wplyw(wplyw.miesiac, wplyw.kategoria, wplyw.subkategoria, wplyw.kwota)

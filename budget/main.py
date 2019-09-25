@@ -57,6 +57,7 @@ def main():
     # common
     # ---------------
 
+    ex.save_data_to_excel(hist.process_wydatki_vs_wplywy(database), ["Miesiąc", "Typ", "Suma"], "Wpływy vs. wydatki")
     ex.save_data_to_excel(hist.process_miesiace(database), ["Miesiąc"], "Miesiące")
 
     # ---------------
