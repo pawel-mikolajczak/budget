@@ -2,11 +2,11 @@ import logging
 from datetime import datetime
 
 logger = logging.getLogger("IrregularItem")
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 class IrregularItem:
-    def __init__(self, data, kategoria, podkategoria, detale, minimum, avg, maximum, finally_paid, final_paid_date,
+    def __init__(self, data, kategoria, subkategoria, detale, minimum, avg, maximum, finally_paid, final_paid_date,
                  comment):
         self.data = data
         self.comment = comment
@@ -16,17 +16,17 @@ class IrregularItem:
         self.avg = avg
         self.minimum = minimum
         self.detale = detale
-        self.podkategoria = podkategoria
+        self.subkategoria = subkategoria
         self.kategoria = kategoria
 
         logger.debug(
-            "IrregularItem init {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(data, kategoria, podkategoria, detale,
+            "IrregularItem init {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(data, kategoria, subkategoria, detale,
                                                                                minimum, avg, maximum, finally_paid,
                                                                                final_paid_date, comment))
 
     def __str__(self) -> str:
-        return "Data={}; Kategoria={}; Podkategoria={}; Detale={}; Minimum={}; AVG={}; Maximum={}".format(
-            self.get_date(self.data), self.kategoria, self.podkategoria, self.detale, self.minimum, self.avg,
+        return "Data={}; Kategoria={}; Subkategoria={}; Detale={}; Minimum={}; AVG={}; Maximum={}".format(
+            self.get_date(self.data), self.kategoria, self.subkategoria, self.detale, self.minimum, self.avg,
             self.maximum)
 
     def __repr__(self) -> str:
