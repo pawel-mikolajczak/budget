@@ -3,6 +3,7 @@ import logging
 import pandas as pd
 
 from budget.accounts.AccountItem import AccountItem
+from budget.db.DatabaseSupport import DatabaseSupport
 
 logger = logging.getLogger("AccountsService")
 
@@ -49,10 +50,12 @@ class AccountsService:
 
         return accounts
 
-    def store_konta(self, konta:list, database):
+    def store_konta(self, konta: list, database: DatabaseSupport):
         logger.info("Storing accounts to database: {}...".format(konta.__len__()))
         for konto in konta:
-            database.add_konto(konto.typ, konto.data, konto.opis, konto.kwota, konto.bilans)
+            query = "INSERT INTO konta ('konto', 'data', 'opis', 'kwota', 'bilans') VALUES ('{}','{}','{}',{},{})".format(
+                konto.typ, konto.data, konto.opis, konto.kwota, konto.bilans)
+            database.insert_data(query, "Konto")
         logger.info("Storing accounts to database finished: {}...".format(konta.__len__()))
 
     def process_sum_konta(self, database):

@@ -28,6 +28,7 @@ class DatabaseSupport:
             self.create_table('wydatki.sql')
             self.create_table('wplywy.sql')
             self.create_table('konta.sql')
+            self.create_table('nieregularne.sql')
 
         except sqlite3.Error as error:
             logger.error("Error while connecting to sqlite", error)
@@ -40,34 +41,11 @@ class DatabaseSupport:
         logger.info("Table {} created".format(table_sql))
         cursor.close()
 
-    def add_wydatek(self, miesiac, kategoria, subkategoria, kwota):
+    def insert_data(self, query, type):
         cursor = self.sqliteConnection.cursor()
-
-        sqlite_insert_query = "INSERT INTO wydatki ('miesiac', 'kategoria', 'subkategoria', 'kwota') VALUES ('{}','{}','{}',{})".format(miesiac, kategoria, subkategoria, kwota)
-
-        count = cursor.execute(sqlite_insert_query)
+        cursor.execute(query)
         self.sqliteConnection.commit()
-        logger.debug("Wydatek {}, {}, {}, {} added: {} rows".format(miesiac, kategoria, subkategoria, kwota, cursor.rowcount))
-        cursor.close()
-
-    def add_wplyw(self, miesiac, kategoria, subkategoria, kwota):
-        cursor = self.sqliteConnection.cursor()
-
-        sqlite_insert_query = "INSERT INTO wplywy ('miesiac', 'kategoria', 'subkategoria', 'kwota') VALUES ('{}','{}','{}',{})".format(miesiac, kategoria, subkategoria, kwota)
-
-        count = cursor.execute(sqlite_insert_query)
-        self.sqliteConnection.commit()
-        logger.debug("Wpływ {}, {}, {}, {} added: {} rows".format(miesiac, kategoria, subkategoria, kwota, cursor.rowcount))
-        cursor.close()
-
-    def add_konto(self, konto, data, opis, kwota, bilans):
-        cursor = self.sqliteConnection.cursor()
-
-        sqlite_insert_query = "INSERT INTO konta ('konto', 'data', 'opis', 'kwota', 'bilans') VALUES ('{}','{}','{}',{},{})".format(konto, data, opis, kwota, bilans)
-
-        count = cursor.execute(sqlite_insert_query)
-        self.sqliteConnection.commit()
-        logger.debug("Konto {}, {}, {}, {}, {} added: {} rows".format(konto, data, opis, kwota, bilans, cursor.rowcount))
+        logger.debug("{} added: {} rows".format(type, cursor.rowcount))
         cursor.close()
 
     def select_data(self, query):

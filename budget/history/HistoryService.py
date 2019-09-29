@@ -2,6 +2,7 @@ import logging
 
 import pandas as pd
 
+from budget.db.DatabaseSupport import DatabaseSupport
 from budget.history.HistoryItem import HistoryItem
 
 logger = logging.getLogger("HistoryService")
@@ -95,9 +96,11 @@ class HistoryService:
 
         return history
 
-    def store_wydatki(self, wydatki, database):
+    def store_wydatki(self, wydatki, database: DatabaseSupport):
         for wydatek in wydatki:
-            database.add_wydatek(wydatek.miesiac, wydatek.kategoria, wydatek.subkategoria, wydatek.kwota)
+            query = "INSERT INTO wydatki ('miesiac', 'kategoria', 'subkategoria', 'kwota') VALUES ('{}','{}','{}',{})".format(
+                wydatek.miesiac, wydatek.kategoria, wydatek.subkategoria, wydatek.kwota)
+            database.insert_data(query, "Wydatek")
 
     def process_miesiace(self, database):
         return database.select_data(
@@ -127,14 +130,29 @@ class HistoryService:
 
     def process_wydatki_vs_wplywy(self, database):
         return database.select_data(
-            "SELECT x.miesiac, x.typ, SUM(x.kwota) [suma] FROM (SELECT 'Wpływy' [typ], miesiac, kwota FROM wplywy UNION SELECT 'Wydatki' [typ], miesiac, kwota FROM wydatki) x GROUP BY x.miesiac, x.typ ORDER BY 1 DESC, 2 ASC")
+            "SELECT x.miesiac, x.typ, SUM(x.kwota) [suma] "
+            "FROM "
+            "   ("
+            "       SELECT 'Wpływy' [typ], miesiac, kwota "
+            "       FROM wplywy "
+            "       UNION "
+            "       SELECT 'Wydatki' [typ], miesiac, kwota "
+            "       FROM wydatki"
+            "   ) x "
+            "GROUP BY x.miesiac, x.typ "
+            "ORDER BY 1 DESC, 2 ASC")
 
-    def store_wplywy(self, wplywy, database):
+    def store_wplywy(self, wplywy, database: DatabaseSupport):
         for wplyw in wplywy:
-            database.add_wplyw(wplyw.miesiac, wplyw.kategoria, wplyw.subkategoria, wplyw.kwota)
+            query = "INSERT INTO wplywy ('miesiac', 'kategoria', 'subkategoria', 'kwota') VALUES ('{}','{}','{}',{})".format(
+                wplyw.miesiac, wplyw.kategoria, wplyw.subkategoria, wplyw.kwota)
+            database.insert_data(query, "Wpływ")
 
     def process_sum_wplywy(self, database):
-        return database.select_data("SELECT miesiac, SUM(kwota) [suma] FROM wplywy GROUP BY miesiac ORDER BY 1 DESC")
+        return database.select_data("SELECT miesiac, SUM(kwota) [suma] "
+                                    "FROM wplywy "
+                                    "GROUP BY miesiac "
+                                    "ORDER BY 1 DESC")
 
     def process_wydatki_pivot(self, database):
         wydatki = list()
@@ -142,8 +160,11 @@ class HistoryService:
         for cat in wydatki_kategorie_pivot.keys():
             kategoria = cat
             subkategorie = "','".join(wydatki_kategorie_pivot.get(cat))
-            wydatki += database.select_data(
-                "SELECT '{}' [kategoria], miesiac, SUM(kwota) [suma] FROM wydatki WHERE subkategoria IN ('{}') GROUP BY miesiac".format(
-                    kategoria, subkategorie))
+            query = "SELECT '{}' [kategoria], miesiac, SUM(kwota) [suma] " \
+                    "FROM wydatki " \
+                    "WHERE subkategoria IN ('{}') " \
+                    "GROUP BY miesiac".format(
+                kategoria, subkategorie)
+            wydatki += database.select_data(query)
             wydatki
         return wydatki
