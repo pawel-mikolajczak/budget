@@ -42,6 +42,7 @@ class DatabaseSupport:
         cursor.close()
 
     def insert_data(self, query, type):
+        logger.debug("INSERT Query '{}'".format(query))
         cursor = self.sqliteConnection.cursor()
         cursor.execute(query)
         self.sqliteConnection.commit()
