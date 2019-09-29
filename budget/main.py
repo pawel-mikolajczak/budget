@@ -36,6 +36,7 @@ def main():
     ex.save_data_to_excel(hist.process_kategorie(database), ["Kategoria"], "Kategorie")
     ex.save_data_to_excel(hist.process_subkategorie(database), ["Kategoria", "Subkategoria"], "Subkategorie")
     ex.save_data_to_excel(hist.process_sum_wydatki(database), ["Miesiąc", "Suma"], "Wydatki SUM")
+    ex.save_data_to_excel(hist.process_wydatki_pivot(database), ["Kategoria", "Miesiąc", "Suma"], "Wydatki pivot SUM")
 
     # ---------------
     # wplywy

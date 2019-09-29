@@ -113,7 +113,7 @@ class HistoryService:
     def process_sum_wydatki(self, database):
         return database.select_data("SELECT miesiac, SUM(kwota) [suma] FROM wydatki GROUP BY miesiac ORDER BY 1 DESC")
 
-    def process_wydatki_vs_wplywy(selfself, database):
+    def process_wydatki_vs_wplywy(self, database):
         return database.select_data(
             "SELECT x.miesiac, x.typ, SUM(x.kwota) [suma] FROM (SELECT 'Wpływy' [typ], miesiac, kwota FROM wplywy UNION SELECT 'Wydatki' [typ], miesiac, kwota FROM wydatki) x GROUP BY x.miesiac, x.typ ORDER BY 1 DESC, 2 ASC")
 
@@ -123,3 +123,15 @@ class HistoryService:
 
     def process_sum_wplywy(self, database):
         return database.select_data("SELECT miesiac, SUM(kwota) [suma] FROM wplywy GROUP BY miesiac ORDER BY 1 DESC")
+
+    def process_wydatki_pivot(self, database):
+        wydatki = list()
+
+        for cat in wydatki_kategorie_pivot.keys():
+            kategoria = cat
+            subkategorie = "','".join(wydatki_kategorie_pivot.get(cat))
+            wydatki += database.select_data(
+                "SELECT '{}' [kategoria], miesiac, SUM(kwota) [suma] FROM wydatki WHERE subkategoria IN ('{}') GROUP BY miesiac".format(
+                    kategoria, subkategorie))
+            wydatki
+        return wydatki
