@@ -1,9 +1,14 @@
+import logging
+
 import pandas as pd
+
+from budget.history.HistoryItem import HistoryItem
+
+logger = logging.getLogger("HistoryService")
 
 # =============================================
 # constants
 # =============================================
-from budget.history.HistoryItem import HistoryItem
 
 col_miesiac = "Miesiąc"
 

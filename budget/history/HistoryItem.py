@@ -1,5 +1,9 @@
+import logging
 import math
 from datetime import datetime
+
+logger = logging.getLogger("HistoryItem")
+logger.setLevel(logging.INFO)
 
 
 class HistoryItem:
@@ -12,7 +16,7 @@ class HistoryItem:
             self.kwota = float("0.0")
         else:
             self.kwota = kwota
-        print("{} init {}, {}, {}, {}".format(typ, miesiac, kategoria, subkategoria, kwota))
+        logger.debug("{} init {}, {}, {}, {}".format(typ, miesiac, kategoria, subkategoria, kwota))
 
     def __str__(self) -> str:
         return "Typ={}; Miesiąc={}; Kategoria={}; Subkategoria={}; Kwota={}".format(self.typ,

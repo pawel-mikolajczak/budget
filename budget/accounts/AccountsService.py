@@ -1,10 +1,14 @@
+import logging
+
 import pandas as pd
+
+from budget.accounts.AccountItem import AccountItem
+
+logger = logging.getLogger("AccountsService")
 
 # =============================================
 # constants
 # =============================================
-from budget.accounts.AccountItem import AccountItem
-
 col_data = "Data"
 
 # =============================================
@@ -25,7 +29,10 @@ class AccountsService:
         items = []
 
         for konto in konta:
-            self.process_account(xslx, konto, items)
+            logger.info("Processing account: '{}' started...".format(konto))
+            records_processed = self.process_account(xslx, konto, items)
+            items.__add__(records_processed)
+            logger.info("Processing account: '{}' finished. Number of records: {}".format(konto, records_processed.__len__()))
 
         return items
 
@@ -33,9 +40,13 @@ class AccountsService:
     def process_account(xslx, konto, items):
         df = pd.read_excel(xslx, '%s' % konto)
 
+        accounts = list()
+
         for index, row in df.iterrows():
             a = AccountItem(konto, row[col_data], row["Opis"], row["Kwota"], row["Bilans"])
-            items.append(a)
+            accounts.append(a)
+
+        return accounts
 
     def store_konta(self, konta, database):
         for konto in konta:

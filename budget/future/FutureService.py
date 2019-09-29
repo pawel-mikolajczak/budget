@@ -2,6 +2,10 @@ import pandas as pd
 
 from budget.future.IrregularItem import IrregularItem
 
+import logging
+
+logger = logging.getLogger("FutureService")
+
 # =============================================
 # constants
 # =============================================

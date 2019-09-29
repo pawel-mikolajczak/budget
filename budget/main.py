@@ -4,6 +4,8 @@ import budget.excel.ExcelService as excel_service
 import budget.future.FutureService as future_service
 import budget.history.HistoryService as hist_service
 
+import logging
+
 # =============================================
 # constants
 # =============================================
@@ -11,6 +13,11 @@ excel_file_path = r'C:\Users\pabll\Desktop\budżet\budżet.xlsx'
 
 
 def main():
+    # ---------------
+    # logging setup
+    # ---------------
+    logging.basicConfig(format='%(asctime)s %(levelname)-5s - %(name)-20s: %(message)s', level=logging.DEBUG)
+
     # ---------------
     # init services
     # ---------------

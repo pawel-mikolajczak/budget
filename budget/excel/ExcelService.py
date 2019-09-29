@@ -1,5 +1,9 @@
 import xlsxwriter
 
+import logging
+
+logger = logging.getLogger("ExcelService")
+
 output_file_path = r'C:\Users\pabll\Desktop\budżet\budżet_processed.xlsx'
 
 

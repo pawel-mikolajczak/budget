@@ -1,6 +1,9 @@
+import logging
 import math
 from datetime import datetime
 
+logger = logging.getLogger("AccountItem")
+logger.setLevel(logging.INFO)
 
 class AccountItem:
     def __init__(self, typ, data, opis, kwota, bilans):
@@ -18,7 +21,7 @@ class AccountItem:
         else:
             self.bilans = bilans
 
-        print("Konto init {}, {}, {}, {}, {}".format(typ, data, opis, kwota, bilans))
+        logger.debug("Konto init {}, {}, {}, {}, {}".format(typ, data, opis, kwota, bilans))
 
     def __str__(self) -> str:
         return "Typ={}; Data={}; Opis={}; Kwota={}; Bilans={}".format(self.typ,

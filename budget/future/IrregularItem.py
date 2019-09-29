@@ -1,4 +1,8 @@
+import logging
 from datetime import datetime
+
+logger = logging.getLogger("IrregularItem")
+logger.setLevel(logging.INFO)
 
 
 class IrregularItem:
@@ -15,9 +19,10 @@ class IrregularItem:
         self.podkategoria = podkategoria
         self.kategoria = kategoria
 
-        print("IrregularItem init {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(data, kategoria, podkategoria, detale,
-                                                                                 minimum, avg, maximum, finally_paid,
-                                                                                 final_paid_date, comment))
+        logger.debug(
+            "IrregularItem init {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(data, kategoria, podkategoria, detale,
+                                                                               minimum, avg, maximum, finally_paid,
+                                                                               final_paid_date, comment))
 
     def __str__(self) -> str:
         return "Data={}; Kategoria={}; Podkategoria={}; Detale={}; Minimum={}; AVG={}; Maximum={}".format(
