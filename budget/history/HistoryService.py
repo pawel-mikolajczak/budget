@@ -71,22 +71,29 @@ class HistoryService:
     def process_items(self, input_file_path, kategorie, typ):
         xslx = pd.ExcelFile(input_file_path)
 
-        items = []
+        items = list()
 
         for tab in kategorie.keys():
-            self.process_category(xslx, tab, items, typ)
+            logger.info("Processing category '{}' started...".format(tab))
+            history = self.process_category(xslx, tab, typ)
+            items.extend(history)
+            logger.info("Processed {} items for category '{}'".format(history.__len__(), tab))
 
         return items
 
     @staticmethod
-    def process_category(xslx, tab, items, typ):
+    def process_category(xslx, tab, typ):
         df = pd.read_excel(xslx, '%s' % tab)
+
+        history = list()
 
         for index, row in df.iterrows():
             for column in row.keys():
                 if column != col_miesiac:
                     w = HistoryItem(typ, row[col_miesiac], tab, column, row.get(column))
-                    items.append(w)
+                    history.append(w)
+
+        return history
 
     def store_wydatki(self, wydatki, database):
         for wydatek in wydatki:
