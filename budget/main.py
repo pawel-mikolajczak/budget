@@ -1,10 +1,10 @@
+import logging
+
 import budget.accounts.AccountsService as acc_service
 import budget.db.DatabaseSupport as db
 import budget.excel.ExcelService as excel_service
 import budget.future.FutureService as future_service
 import budget.history.HistoryService as hist_service
-
-import logging
 
 # =============================================
 # constants
@@ -79,7 +79,8 @@ def main():
     # future budget
     # ---------------
 
-    fut.read_irregular_items(excel_file_path)
+    irregular_items = fut.read_irregular_items(excel_file_path)
+    fut.store_irregular_items(irregular_items, database)
 
     # ---------------
     # closing

@@ -1,8 +1,10 @@
+import logging
+from typing import List
+
 import pandas as pd
 
+from budget.db.DatabaseSupport import DatabaseSupport
 from budget.future.IrregularItem import IrregularItem
-
-import logging
 
 logger = logging.getLogger("FutureService")
 
@@ -35,3 +37,12 @@ class FutureService:
             items.append(i)
 
         return items
+
+    def store_irregular_items(self, items: List[IrregularItem], database: DatabaseSupport):
+        logger.info("Storing irregular items to database: {}...".format(items.__len__()))
+        for item in items:
+            query = "INSERT INTO nieregularne ('data', 'kategoria', 'subkategoria', 'detale', 'minimum', 'average', 'maximum', 'finally_paid', 'final_paid_date', 'comments') VALUES ('{}','{}','{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(
+                item.data, item.kategoria, item.subkategoria, item.detale, item.minimum, item.avg, item.maximum,
+                item.finally_paid, item.final_paid_date, item.comment)
+            database.insert_data(query, "Irregular item")
+        logger.info("Storing irregular items to database finished: {}...".format(items.__len__()))

@@ -9,5 +9,5 @@ CREATE TABLE nieregularne (
  maximum NUMERIC(10,2) NOT NULL,
  finally_paid NUMERIC(10,2) NULL,
  final_paid_date datetime NULL,
- comment text NULL
+ comments text NULL
 );
