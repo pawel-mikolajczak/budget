@@ -1,12 +1,14 @@
-import budget.db.DatabaseSupport as db
-import budget.history.HistoryService as hist_service
 import budget.accounts.AccountsService as acc_service
+import budget.db.DatabaseSupport as db
 import budget.excel.ExcelService as excel_service
+import budget.future.FutureService as future_service
+import budget.history.HistoryService as hist_service
 
 # =============================================
 # constants
 # =============================================
 excel_file_path = r'C:\Users\pabll\Desktop\budżet\budżet.xlsx'
+
 
 def main():
     # ---------------
@@ -16,6 +18,7 @@ def main():
     hist = hist_service.HistoryService()
     ex = excel_service.ExcelService()
     acc = acc_service.AccountsService()
+    fut = future_service.FutureService()
 
     # ---------------
     # database
@@ -64,6 +67,12 @@ def main():
 
     ex.save_data_to_excel(hist.process_wydatki_vs_wplywy(database), ["Miesiąc", "Typ", "Suma"], "Wpływy vs. wydatki")
     ex.save_data_to_excel(hist.process_miesiace(database), ["Miesiąc"], "Miesiące")
+
+    # ---------------
+    # future budget
+    # ---------------
+
+    fut.read_irregular_items(excel_file_path)
 
     # ---------------
     # closing
