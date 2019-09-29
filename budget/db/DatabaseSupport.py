@@ -68,6 +68,7 @@ class DatabaseSupport:
         cursor.close()
 
     def select_data(self, query):
+        print("SELECT Query '{}'".format(query))
         cursor = self.sqliteConnection.cursor()
         cursor.execute(query)
         records = cursor.fetchall()
