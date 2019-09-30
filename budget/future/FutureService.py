@@ -6,7 +6,7 @@ import pandas as pd
 from budget.db.DatabaseSupport import DatabaseSupport
 from budget.future.IrregularItem import IrregularItem
 
-DAYS_IN_A_FUTURE = 365*3
+DAYS_IN_A_FUTURE = 365 * 3
 
 logger = logging.getLogger("FutureService")
 
@@ -57,3 +57,6 @@ class FutureService:
             x.append(day)
             l.append(x)
         return l
+
+    def process_cashflow(self, database: DatabaseSupport):
+        return database.select_data_via_script("future_cashflow.sql")

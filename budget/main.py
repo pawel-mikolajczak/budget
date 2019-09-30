@@ -83,6 +83,7 @@ def main():
     fut.store_irregular_items(irregular_items, database)
 
     ex.save_data_to_excel(fut.process_days(), ["Data"], "Dni")
+    ex.save_data_to_excel(fut.process_cashflow(database), ["Data", "Detale", "Min", "Avg", "Max"], "Cashflow - details")
 
     # ---------------
     # closing
