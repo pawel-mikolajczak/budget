@@ -82,6 +82,8 @@ def main():
     irregular_items = fut.read_irregular_items(excel_file_path)
     fut.store_irregular_items(irregular_items, database)
 
+    ex.save_data_to_excel(fut.process_days(), ["Data"], "Dni")
+
     # ---------------
     # closing
     # ---------------

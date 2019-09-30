@@ -6,6 +6,8 @@ import pandas as pd
 from budget.db.DatabaseSupport import DatabaseSupport
 from budget.future.IrregularItem import IrregularItem
 
+DAYS_IN_A_FUTURE = 365*3
+
 logger = logging.getLogger("FutureService")
 
 # =============================================
@@ -46,3 +48,12 @@ class FutureService:
                 item.finally_paid, item.final_paid_date, item.comment)
             database.insert_data(query, "Irregular item")
         logger.info("Storing irregular items to database finished: {}...".format(items.__len__()))
+
+    def process_days(self):
+        l = list()
+        days = pd.date_range(pd.datetime.today().date(), periods=DAYS_IN_A_FUTURE, freq='D').tolist()
+        for day in days:
+            x = list()
+            x.append(day)
+            l.append(x)
+        return l
