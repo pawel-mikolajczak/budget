@@ -41,6 +41,17 @@ class DatabaseSupport:
         logger.info("Table {} created".format(table_sql))
         cursor.close()
 
+    def select_data_via_script(self, script):
+        cursor:sqlite3.Cursor = self.sqliteConnection.cursor()
+        script_path = '../budget/db/%s' % script
+        with open(script_path, 'r') as sqlite_file:
+            sql_script = sqlite_file.read()
+        cursor.execute(sql_script)
+        records = cursor.fetchall()
+        logger.info("Total rows for query '{}' are: {}".format(script_path, len(records)))
+        cursor.close()
+        return records
+
     def insert_data(self, query, type):
         logger.debug("INSERT Query '{}'".format(query))
         cursor = self.sqliteConnection.cursor()
