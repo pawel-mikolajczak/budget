@@ -25,10 +25,10 @@ class DatabaseSupport:
             logger.info("SQLite Database Version is: {}".format(record))
             cursor.close()
 
-            self.create_table('wydatki.sql')
-            self.create_table('wplywy.sql')
-            self.create_table('konta.sql')
-            self.create_table('nieregularne.sql')
+            self.create_table('scripts/create_tables/wydatki.sql')
+            self.create_table('scripts/create_tables/wplywy.sql')
+            self.create_table('scripts/create_tables/konta.sql')
+            self.create_table('scripts/create_tables/nieregularne.sql')
 
         except sqlite3.Error as error:
             logger.error("Error while connecting to sqlite", error)

@@ -59,4 +59,4 @@ class FutureService:
         return l
 
     def process_cashflow(self, database: DatabaseSupport):
-        return database.select_data_via_script("future_cashflow.sql")
+        return database.select_data_via_script("scripts/queries/future_cashflow.sql")
