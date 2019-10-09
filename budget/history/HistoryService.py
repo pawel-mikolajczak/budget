@@ -102,22 +102,9 @@ class HistoryService:
                 wydatek.miesiac, wydatek.kategoria, wydatek.subkategoria, wydatek.kwota)
             database.insert_data(query, "Wydatek")
 
-    def process_miesiace(self, database):
-        return database.select_data(
-            "SELECT DISTINCT miesiac "
-            "FROM wydatki "
-            ""
-            "UNION "
-            ""
-            "SELECT DISTINCT miesiac "
-            "FROM wplywy "
-            ""
-            "UNION "
-            ""
-            "SELECT DISTINCT DATE(data, 'Start of month') [miesiac] "
-            "FROM konta "
-            ""
-            "ORDER BY 1 DESC")
+    def process_miesiace(self, database:DatabaseSupport):
+        database.select_data_via_script("scripts/queries/process_miesiace.sql")
+        return database.select_data("SELECT DISTINCT miesiac FROM miesiace ORDER BY 1 DESC")
 
     def process_kategorie(self, database):
         return database.select_data("SELECT DISTINCT kategoria FROM wydatki ORDER BY 1 ASC")
