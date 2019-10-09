@@ -49,14 +49,9 @@ class FutureService:
             database.insert_data(query, "Irregular item")
         logger.info("Storing irregular items to database finished: {}...".format(items.__len__()))
 
-    def process_days(self):
-        l = list()
-        days = pd.date_range(pd.datetime.today().date(), periods=DAYS_IN_A_FUTURE, freq='D').tolist()
-        for day in days:
-            x = list()
-            x.append(day)
-            l.append(x)
-        return l
+    def process_days(self, database: DatabaseSupport):
+        database.select_data_via_script("scripts/queries/process_dni.sql")
+        return database.select_data("SELECT dzien FROM dni ORDER BY 1 ASC")
 
     def process_cashflow(self, database: DatabaseSupport):
         return database.select_data_via_script("scripts/queries/future_cashflow.sql")
