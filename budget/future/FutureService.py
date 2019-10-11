@@ -5,6 +5,8 @@ import pandas as pd
 
 from budget.db.DatabaseSupport import DatabaseSupport
 from budget.future.IrregularItem import IrregularItem
+from budget.future.MonthlyItem import MonthBudgetItem
+from budget.future.MonthlyItem import MonthlyItem
 
 DAYS_IN_A_FUTURE = 365 * 3
 
@@ -18,6 +20,7 @@ logger = logging.getLogger("FutureService")
 # future_tabs
 # =============================================
 irregular_tab = "B - Nieregularne"
+monthly_tab = "B - Miesięczne"
 
 
 # =============================================
@@ -55,3 +58,31 @@ class FutureService:
 
     def process_cashflow(self, database: DatabaseSupport):
         return database.select_data_via_script("scripts/queries/future_cashflow.sql")
+
+    def read_monthly_budget(self, input_file_path):
+        xslx = pd.ExcelFile(input_file_path)
+
+        items = []
+
+        df = pd.read_excel(xslx, '%s' % monthly_tab)
+
+        for index, row in df.iterrows():
+            monthly_budget = list()
+            monthly_budget.append(MonthBudgetItem(1, row["1Min"], row["1Avg"], row["1Max"]))
+            monthly_budget.append(MonthBudgetItem(2, row["2Min"], row["2Avg"], row["2Max"]))
+            monthly_budget.append(MonthBudgetItem(3, row["3Min"], row["3Avg"], row["3Max"]))
+            monthly_budget.append(MonthBudgetItem(4, row["4Min"], row["4Avg"], row["4Max"]))
+            monthly_budget.append(MonthBudgetItem(5, row["5Min"], row["5Avg"], row["5Max"]))
+            monthly_budget.append(MonthBudgetItem(6, row["6Min"], row["6Avg"], row["6Max"]))
+            monthly_budget.append(MonthBudgetItem(7, row["7Min"], row["7Avg"], row["7Max"]))
+            monthly_budget.append(MonthBudgetItem(8, row["8Min"], row["8Avg"], row["8Max"]))
+            monthly_budget.append(MonthBudgetItem(9, row["9Min"], row["9Avg"], row["9Max"]))
+            monthly_budget.append(MonthBudgetItem(10, row["10Min"], row["10Avg"], row["10Max"]))
+            monthly_budget.append(MonthBudgetItem(11, row["11Min"], row["11Avg"], row["11Max"]))
+            monthly_budget.append(MonthBudgetItem(12, row["12Min"], row["12Avg"], row["12Max"]))
+
+            i = MonthlyItem(row["Kategoria"], row["Podkategoria"], row["Detale"], row["Dnia miesiąca"],
+                            row["Rok"], monthly_budget)
+            items.append(i)
+
+        return items
