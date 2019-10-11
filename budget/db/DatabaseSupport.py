@@ -29,6 +29,7 @@ class DatabaseSupport:
             self.create_table('scripts/create_tables/wplywy.sql')
             self.create_table('scripts/create_tables/konta.sql')
             self.create_table('scripts/create_tables/nieregularne.sql')
+            self.create_table('scripts/create_tables/miesieczne.sql')
 
         except sqlite3.Error as error:
             logger.error("Error while connecting to sqlite", error)

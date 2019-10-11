@@ -82,9 +82,10 @@ def main():
     irregular_items = fut.read_irregular_items(excel_file_path)
     fut.store_irregular_items(irregular_items, database)
     monthly_items = fut.read_monthly_budget(excel_file_path)
+    fut.store_monthly_items(monthly_items, database)
 
     ex.save_data_to_excel(fut.process_days(database), ["Data"], "Dni")
-    ex.save_data_to_excel(fut.process_cashflow(database), ["Data", "Detale", "Min", "Avg", "Max"], "Cashflow - details")
+    ex.save_data_to_excel(fut.process_cashflow(database), ["Data", "Kategoria", "Subkategoria", "Detale", "Min", "Avg", "Max"], "Cashflow - details")
 
     # ---------------
     # closing

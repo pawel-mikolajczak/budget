@@ -1,11 +1,33 @@
 SELECT
     d.dzien [data],
-    n.detale [detale],
-    n.minimum [min],
-    n.average [avg],
-    n.maximum [max]
+    x.kategoria [kategoria],
+    x.subkategoria [subkategoria],
+    x.detale [detale],
+    x.minimum [min],
+    x.average [avg],
+    x.maximum [max]
 FROM dni d
-    LEFT OUTER JOIN nieregularne n
-        ON date(n.data) = d.dzien
-        AND n.final_paid_date = 'NaT'
+    LEFT OUTER JOIN (
+        SELECT
+            data,
+            kategoria,
+            subkategoria,
+            detale,
+            minimum,
+            average,
+            maximum
+        FROM nieregularne
+        WHERE final_paid_date = 'NaT'
+        UNION
+        SELECT
+            data,
+            kategoria,
+            subkategoria,
+            detale,
+            minimum,
+            average,
+            maximum
+        FROM miesieczne
+    ) x
+        ON date(x.data) = d.dzien
 ORDER BY d.dzien ASC

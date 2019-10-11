@@ -1,4 +1,7 @@
 import logging
+import datetime
+import calendar
+
 from typing import List
 
 import pandas as pd
@@ -86,3 +89,19 @@ class FutureService:
             items.append(i)
 
         return items
+
+    def store_monthly_items(self, items: List[MonthlyItem], database: DatabaseSupport):
+        logger.info("Storing monthly items to database: {}...".format(items.__len__()))
+        for item in items:
+            for mb in item.monthly_budget:
+                day_of_month = None
+                if(item.day_of_the_month == "LAST"):
+                    day_of_month = calendar.monthrange(item.year, mb.miesiac)[1]
+                else:
+                    day_of_month = int(item.day_of_the_month)
+                data = datetime.date(item.year, mb.miesiac, day_of_month)
+
+                query = "INSERT INTO miesieczne ('data', 'kategoria', 'subkategoria', 'detale', 'minimum', 'average', 'maximum') VALUES ('{}','{}','{}', '{}', '{}', '{}', '{}')".format(
+                    data, item.kategoria, item.subkategoria, item.detale, mb.min, mb.avg, mb.max)
+                database.insert_data(query, "Monthly item")
+        logger.info("Storing irregular items to database finished: {}...".format(items.__len__()))
