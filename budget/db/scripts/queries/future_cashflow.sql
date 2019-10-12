@@ -28,6 +28,16 @@ FROM dni d
             average,
             maximum
         FROM miesieczne
+        UNION
+        SELECT
+            data,
+            "Stan konta" [kategoria],
+            "Stan konta" [subkategoria],
+            "Stan konta" [detale],
+            stan_konta [minimum],
+            stan_konta [average],
+            stan_konta [maximum]
+         FROM mbank_stan_konta
     ) x
         ON date(x.data) = d.dzien
 ORDER BY d.dzien ASC

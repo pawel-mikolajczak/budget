@@ -30,6 +30,7 @@ class DatabaseSupport:
             self.create_table('scripts/create_tables/konta.sql')
             self.create_table('scripts/create_tables/nieregularne.sql')
             self.create_table('scripts/create_tables/miesieczne.sql')
+            self.create_table('scripts/create_tables/mbank_stan_konta.sql')
 
         except sqlite3.Error as error:
             logger.error("Error while connecting to sqlite", error)
@@ -42,12 +43,12 @@ class DatabaseSupport:
         logger.info("Table {} created".format(table_sql))
         cursor.close()
 
-    def select_data_via_script(self, script):
+    def select_data_via_script(self, script, parameters=list()):
         cursor:sqlite3.Cursor = self.sqliteConnection.cursor()
         script_path = '../budget/db/%s' % script
         with open(script_path, 'r') as sqlite_file:
             sql_script = sqlite_file.read()
-        cursor.execute(sql_script)
+        cursor.execute(sql_script.format(*parameters))
         records = cursor.fetchall()
         logger.info("Total rows for query '{}' are: {}".format(script_path, len(records)))
         cursor.close()

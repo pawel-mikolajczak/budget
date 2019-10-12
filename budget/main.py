@@ -84,6 +84,8 @@ def main():
     monthly_items = fut.read_monthly_budget(excel_file_path)
     fut.store_monthly_items(monthly_items, database)
 
+    fut.process_mbank_stan_konta(excel_file_path, database)
+
     ex.save_data_to_excel(fut.process_days(database), ["Data"], "Dni")
     ex.save_data_to_excel(fut.process_cashflow(database), ["Data", "Kategoria", "Subkategoria", "Detale", "Min", "Avg", "Max"], "Cashflow - details")
 

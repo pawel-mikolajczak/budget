@@ -1,6 +1,6 @@
 create table dni as
  WITH RECURSIVE dates(date) AS (
-  VALUES(date('now'))
+  VALUES(date('{}'))
   UNION ALL
   SELECT date(date, '1 day')
   FROM dates

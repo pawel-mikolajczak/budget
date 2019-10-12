@@ -24,6 +24,7 @@ logger = logging.getLogger("FutureService")
 # =============================================
 irregular_tab = "B - Nieregularne"
 monthly_tab = "B - Miesięczne"
+mbank_stan_konta_tab = "K - mBank"
 
 
 # =============================================
@@ -56,7 +57,8 @@ class FutureService:
         logger.info("Storing irregular items to database finished: {}...".format(items.__len__()))
 
     def process_days(self, database: DatabaseSupport):
-        database.select_data_via_script("scripts/queries/process_dni.sql")
+        start_date = database.select_data("SELECT MAX(data) [data] FROM mbank_stan_konta")[0][0]
+        database.select_data_via_script("scripts/queries/process_dni.sql", [start_date])
         return database.select_data("SELECT dzien FROM dni ORDER BY 1 ASC")
 
     def process_cashflow(self, database: DatabaseSupport):
@@ -105,3 +107,16 @@ class FutureService:
                     data, item.kategoria, item.subkategoria, item.detale, mb.min, mb.avg, mb.max)
                 database.insert_data(query, "Monthly item")
         logger.info("Storing irregular items to database finished: {}...".format(items.__len__()))
+
+    def process_mbank_stan_konta(self, input_file_path, database):
+        xslx = pd.ExcelFile(input_file_path)
+
+        items = []
+
+        df = pd.read_excel(xslx, '%s' % mbank_stan_konta_tab)
+
+        for index, row in df.iterrows():
+            query = "INSERT INTO mbank_stan_konta ('data', 'stan_konta') VALUES ('{}','{}')".format(row["Data"], row["Stan konta"])
+            database.insert_data(query, "mBank Stan Konta")
+
+        return items
