@@ -1,7 +1,6 @@
-import logging
-import datetime
 import calendar
-
+import datetime
+import logging
 from typing import List
 
 import pandas as pd
@@ -18,6 +17,21 @@ logger = logging.getLogger("FutureService")
 # =============================================
 # constants
 # =============================================
+
+transfery_kategorie = {
+    "K - Inteligo Paweł": ["Na Inteligo Pawła"],
+    "K - Inteligo Agatka": ["Na Inteligo Agatki"],
+    "K - Gotówka PLN": ["Wypłata gotówki PLN"],
+    "K - Auto": ["Na auto"],
+    "K - Poduszka bezpieczeństwa": ["Na poduszkę finansową"],
+    "K - Wakacje": ["Na wakacje"],
+    "K - Filip": ["Dla Filipka"],
+    "K - Tomek": ["Dla Tomka"],
+    "K - Santander": ["Na Santander"],
+    "K - mBank": ["Lądowanie na poduszce", "Wpłata na konto PLN", "Wyciągamy z auta", "Jedziemy na wakacje",
+                  "Przelew z Inteligo Pawła", "Przelew z Inteligo Agatki", "Przelew od Filipka", "Przelew od Tomka",
+                  "Przelew z Santandera"]
+}
 
 # =============================================
 # future_tabs
@@ -97,7 +111,7 @@ class FutureService:
         for item in items:
             for mb in item.monthly_budget:
                 day_of_month = None
-                if(item.day_of_the_month == "LAST"):
+                if (item.day_of_the_month == "LAST"):
                     day_of_month = calendar.monthrange(item.year, mb.miesiac)[1]
                 else:
                     day_of_month = int(item.day_of_the_month)
@@ -116,7 +130,8 @@ class FutureService:
         df = pd.read_excel(xslx, '%s' % mbank_stan_konta_tab)
 
         for index, row in df.iterrows():
-            query = "INSERT INTO mbank_stan_konta ('data', 'stan_konta') VALUES ('{}','{}')".format(row["Data"], row["Stan konta"])
+            query = "INSERT INTO mbank_stan_konta ('data', 'stan_konta') VALUES ('{}','{}')".format(row["Data"],
+                                                                                                    row["Stan konta"])
             database.insert_data(query, "mBank Stan Konta")
 
         return items
