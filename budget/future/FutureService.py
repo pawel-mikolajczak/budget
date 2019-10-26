@@ -139,3 +139,8 @@ class FutureService:
 
     def process_monthly_budget(self, database:DatabaseSupport):
         database.select_data_via_script("scripts/queries/monthly_budget.sql")
+
+    def process_monthly_budget_execution(self, database):
+        database.select_data_via_script("scripts/queries/monthly_budget_execution.sql")
+        return database.select_data(
+            "SELECT miesiac, kategoria, subkategoria, kwota FROM monthly_budget_execution ORDER BY 1 ASC, 2 ASC, 3 ASC")
