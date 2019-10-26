@@ -136,3 +136,6 @@ class FutureService:
             database.insert_data(query, "mBank Stan Konta")
 
         return items
+
+    def process_monthly_budget(self, database:DatabaseSupport):
+        database.select_data_via_script("scripts/queries/monthly_budget.sql")

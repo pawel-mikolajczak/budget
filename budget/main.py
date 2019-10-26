@@ -88,6 +88,8 @@ def main():
 
     ex.save_data_to_excel(fut.process_days(database), ["Data"], "Dni")
     ex.save_data_to_excel(fut.process_cashflow(database), ["Data", "Kategoria", "Subkategoria", "Detale", "Min", "Avg", "Max"], "Cashflow - details")
+    fut.process_monthly_budget(database)
+
 
     # ---------------
     # closing
