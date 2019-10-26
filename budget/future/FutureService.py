@@ -76,7 +76,8 @@ class FutureService:
         return database.select_data("SELECT dzien FROM dni ORDER BY 1 ASC")
 
     def process_cashflow(self, database: DatabaseSupport):
-        return database.select_data_via_script("scripts/queries/future_cashflow.sql")
+        database.select_data_via_script("scripts/queries/future_cashflow.sql")
+        return database.select_data("SELECT data, kategoria, subkategoria, detale, min, avg, max FROM cashflow_details ORDER BY 1 ASC")
 
     def read_monthly_budget(self, input_file_path):
         xslx = pd.ExcelFile(input_file_path)

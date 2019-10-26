@@ -1,3 +1,4 @@
+create table cashflow_details as
 SELECT
     d.dzien [data],
     x.kategoria [kategoria],
