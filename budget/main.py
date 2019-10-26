@@ -9,7 +9,7 @@ import budget.history.HistoryService as hist_service
 # =============================================
 # constants
 # =============================================
-excel_file_path = r'C:\Users\pabll\Desktop\budżet\budżet.xlsx'
+excel_file_path = r'C:\Users\pabll\Desktop\budżet\budżet.xlsm'
 
 
 def main():
