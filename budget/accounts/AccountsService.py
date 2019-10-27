@@ -58,14 +58,9 @@ class AccountsService:
             database.insert_data(query, "Konto")
         logger.info("Storing accounts to database finished: {}...".format(konta.__len__()))
 
-    def process_sum_konta(self, database):
-        return database.select_data("SELECT "
-                                    "   DATE(data, 'Start of month') [miesiac], "
-                                    "   konto, "
-                                    "   SUM(kwota) [suma] "
-                                    "FROM konta "
-                                    "GROUP BY DATE(data, 'Start of month'), konto "
-                                    "ORDER BY 1 DESC, 2 ASC")
+    def process_sum_konta(self, database:DatabaseSupport):
+        database.select_data_via_script("scripts/queries/sum_konta.sql")
+        return database.select_data("SELECT miesiac, konto, suma FROM sum_konta ORDER BY 1 DESC, 2 ASC")
 
     def process_konta(self, database):
         return database.select_data("SELECT DISTINCT konto "

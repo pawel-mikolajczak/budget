@@ -98,5 +98,4 @@ def main():
     ex.closeExcel()
     database.closeConnection()
 
-
 main()
