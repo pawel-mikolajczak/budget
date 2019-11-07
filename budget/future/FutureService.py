@@ -19,18 +19,15 @@ logger = logging.getLogger("FutureService")
 # =============================================
 
 transfery_kategorie = {
-    "K - Inteligo Paweł": ["Na Inteligo Pawła"],
-    "K - Inteligo Agatka": ["Na Inteligo Agatki"],
-    "K - Gotówka PLN": ["Wypłata gotówki PLN"],
-    "K - Auto": ["Na auto"],
-    "K - Poduszka bezpieczeństwa": ["Na poduszkę finansową"],
-    "K - Wakacje": ["Na wakacje"],
-    "K - Filip": ["Dla Filipka"],
-    "K - Tomek": ["Dla Tomka"],
-    "K - Santander": ["Na Santander"],
-    "K - mBank": ["Lądowanie na poduszce", "Wpłata na konto PLN", "Wyciągamy z auta", "Jedziemy na wakacje",
-                  "Przelew z Inteligo Pawła", "Przelew z Inteligo Agatki", "Przelew od Filipka", "Przelew od Tomka",
-                  "Przelew z Santandera"]
+    "K - Inteligo Paweł": ["Na Inteligo Pawła", "Przelew z Inteligo Pawła"],
+    "K - Inteligo Agatka": ["Na Inteligo Agatki", "Przelew z Inteligo Agatki"],
+    "K - Gotówka PLN": ["Wypłata gotówki PLN", "Wpłata na konto PLN"],
+    "K - Auto": ["Na auto", "Wyciągamy z auta"],
+    "K - Poduszka bezpieczeństwa": ["Na poduszkę finansową", "Lądowanie na poduszce"],
+    "K - Wakacje": ["Na wakacje", "Jedziemy na wakacje"],
+    "K - Filip": ["Dla Filipka", "Przelew od Filipka"],
+    "K - Tomek": ["Dla Tomka", "Przelew od Tomka"],
+    "K - Santander": ["Na Santander", "Przelew z Santandera"]
 }
 
 # =============================================
