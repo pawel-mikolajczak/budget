@@ -48,7 +48,9 @@ class DatabaseSupport:
         script_path = '../budget/db/%s' % script
         with open(script_path, 'r') as sqlite_file:
             sql_script = sqlite_file.read()
-        cursor.execute(sql_script.format(*parameters))
+        query_with_parameters = sql_script.format(*parameters)
+        logger.debug("Query from script with parameters='{}'".format(query_with_parameters))
+        cursor.execute(query_with_parameters)
         records = cursor.fetchall()
         logger.info("Total rows for query '{}' are: {}".format(script_path, len(records)))
         cursor.close()
