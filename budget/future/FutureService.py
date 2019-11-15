@@ -6,6 +6,7 @@ from typing import List
 import pandas as pd
 
 from budget.db.DatabaseSupport import DatabaseSupport
+from budget.future.AccountCashflowItem import AccountCashflowItem
 from budget.future.IrregularItem import IrregularItem
 from budget.future.MonthlyItem import MonthBudgetItem
 from budget.future.MonthlyItem import MonthlyItem
@@ -141,3 +142,16 @@ class FutureService:
         database.select_data_via_script("scripts/queries/monthly_budget_execution.sql")
         return database.select_data(
             "SELECT miesiac, kategoria, subkategoria, kwota FROM monthly_budget_execution ORDER BY 1 ASC, 2 ASC, 3 ASC")
+
+    def process_future_accounts_cashflow(self, database:DatabaseSupport):
+        items = []
+
+        for konto in transfery_kategorie.keys():
+            subkategorie = transfery_kategorie[konto]
+            subkategorie_string = ["', '".join(subkategorie)]
+            account_results_per_month = database.select_data_via_script("scripts/queries/konta_cashflow.sql", subkategorie_string)
+            for result in account_results_per_month:
+                item = AccountCashflowItem(konto, result[0], result[1], result[2], result[3])
+                items.append(item)
+
+        return items

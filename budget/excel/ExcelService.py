@@ -35,5 +35,21 @@ class ExcelService:
             for col_i, col_v in enumerate(columns):
                 wydatki_sheet.write(rec_i, col_i, record[col_i])
 
+    def save_account_cashflow_to_excel(self, items, tab_name):
+        sheet = self.wb.add_worksheet(tab_name)
+
+        sheet.write(0, 0, "Konto")
+        sheet.write(0, 1, "Miesiąc")
+        sheet.write(0, 2, "Min")
+        sheet.write(0, 3, "Avg")
+        sheet.write(0, 4, "Max")
+
+        for index, item in enumerate(items, start=1):
+            sheet.write(index, 0, item.konto)
+            sheet.write(index, 1, item.miesiac)
+            sheet.write(index, 2, item.min)
+            sheet.write(index, 3, item.avg)
+            sheet.write(index, 4, item.max)
+
     def closeExcel(self):
         self.wb.close()

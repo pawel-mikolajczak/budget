@@ -90,6 +90,7 @@ def main():
     ex.save_data_to_excel(fut.process_cashflow(database), ["Data", "Kategoria", "Subkategoria", "Detale", "Min", "Avg", "Max"], "Cashflow - details")
     fut.process_monthly_budget(database)
     ex.save_data_to_excel(fut.process_monthly_budget_execution(database), ["Miesiąc", "Kategoria", "Subkategoria", "Kwota"], "Budżet - wykonanie")
+    ex.save_account_cashflow_to_excel(fut.process_future_accounts_cashflow(database), "Konta cashflow")
 
     # ---------------
     # closing
