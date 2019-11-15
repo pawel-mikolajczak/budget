@@ -1,7 +1,7 @@
 import logging
 from typing import List
 
-logger = logging.getLogger("IrregularItem")
+logger = logging.getLogger("MonthBudgetItem")
 logger.setLevel(logging.DEBUG)
 
 
