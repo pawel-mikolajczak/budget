@@ -35,13 +35,23 @@ def main():
     database.initDatabase()
 
     # ---------------
+    # konta
+    # ---------------
+
+    konta = acc.process_items(excel_file_path)
+    acc.store_konta(konta, database)
+
+    ex.save_data_to_excel(acc.process_sum_konta(database), ["Miesiąc", "Konto", "Suma"], "SUM Konta")
+    ex.save_data_to_excel(acc.process_konta(database), ["Konto"], "Konta")
+
+    # ---------------
     # wydatki
     # ---------------
 
-    wydatki = hist.process_items(excel_file_path, hist_service.wydatki_kategorie, "Wydatek")
-    hist.store_wydatki(wydatki, database)
+    wydatki_mbank = hist.process_items(excel_file_path, hist_service.wydatki_kategorie, "Wydatek")
+    hist.store_wydatki(wydatki_mbank, database)
 
-    ex.save_item_to_excel(wydatki, "Wydatki")
+    ex.save_data_to_excel(database.select_data_via_script("scripts/queries/wydatki.sql"), ["Miesiąc", "Kategoria", "Subkategoria", "Kwota"], "Wydatki")
 
     ex.save_data_to_excel(hist.process_kategorie(database), ["Kategoria"], "Kategorie")
     ex.save_data_to_excel(hist.process_subkategorie(database), ["Kategoria", "Subkategoria"], "Subkategorie")
@@ -57,16 +67,6 @@ def main():
 
     ex.save_item_to_excel(wplywy, "Wpływy")
     ex.save_data_to_excel(hist.process_sum_wplywy(database), ["Miesiąc", "Suma"], "Wpływy SUM")
-
-    # ---------------
-    # konta
-    # ---------------
-
-    konta = acc.process_items(excel_file_path)
-    acc.store_konta(konta, database)
-
-    ex.save_data_to_excel(acc.process_sum_konta(database), ["Miesiąc", "Konto", "Suma"], "SUM Konta")
-    ex.save_data_to_excel(acc.process_konta(database), ["Konto"], "Konta")
 
     # ---------------
     # common
