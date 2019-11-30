@@ -4,5 +4,7 @@ CREATE TABLE konta (
  data datetime NOT NULL,
  opis text NOT NULL,
  kwota NUMERIC(10,2) NOT NULL,
- bilans NUMERIC(10,2) NOT NULL
+ bilans NUMERIC(10,2) NOT NULL,
+ kategoria text NOT NULL,
+ podkategoria text NOT NULL
 );

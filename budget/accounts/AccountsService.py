@@ -45,7 +45,7 @@ class AccountsService:
         accounts = list()
 
         for index, row in df.iterrows():
-            a = AccountItem(konto, row[col_data], row["Opis"], row["Kwota"], row["Bilans"])
+            a = AccountItem(konto, row[col_data], row["Opis"], row["Kwota"], row["Bilans"], row["Kategoria"], row["Podkategoria"])
             accounts.append(a)
 
         return accounts
@@ -53,8 +53,8 @@ class AccountsService:
     def store_konta(self, konta: list, database: DatabaseSupport):
         logger.info("Storing accounts to database: {}...".format(konta.__len__()))
         for konto in konta:
-            query = "INSERT INTO konta ('konto', 'data', 'opis', 'kwota', 'bilans') VALUES ('{}','{}','{}',{},{})".format(
-                konto.typ, konto.data, konto.opis, konto.kwota, konto.bilans)
+            query = "INSERT INTO konta ('konto', 'data', 'opis', 'kwota', 'bilans', 'kategoria', 'podkategoria') VALUES ('{}','{}','{}',{},{},'{}','{}')".format(
+                konto.typ, konto.data, konto.opis, konto.kwota, konto.bilans, konto.kategoria, konto.podkategoria)
             database.insert_data(query, "Konto")
         logger.info("Storing accounts to database finished: {}...".format(konta.__len__()))
 
