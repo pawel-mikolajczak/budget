@@ -19,7 +19,7 @@ FROM dni d
             maximum
         FROM nieregularne
         WHERE final_paid_date = 'NaT'
-        UNION
+        UNION ALL
         SELECT
             data,
             kategoria,
@@ -29,7 +29,7 @@ FROM dni d
             average,
             maximum
         FROM miesieczne
-        UNION
+        UNION ALL
         SELECT
             data,
             "Stan konta" [kategoria],
