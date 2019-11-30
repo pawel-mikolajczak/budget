@@ -16,7 +16,7 @@ col_data = "Data"
 # konta
 # =============================================
 konta = ["K - Inteligo Paweł", "K - Inteligo Agatka", "K - Gotówka PLN", "K - Auto", "K - Poduszka bezpieczeństwa",
-         "K - Wakacje", "K - Filip", "K - Tomek", "K - Santander"]
+         "K - Wakacje", "K - Filip", "K - Tomek", "K - Santander", "K - Revolut", "K - Rachunki", "K - Remont"]
 
 
 # =============================================
