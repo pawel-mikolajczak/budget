@@ -28,7 +28,10 @@ transfery_kategorie = {
     "K - Wakacje": ["Na wakacje", "Jedziemy na wakacje"],
     "K - Filip": ["Dla Filipka", "Przelew od Filipka"],
     "K - Tomek": ["Dla Tomka", "Przelew od Tomka"],
-    "K - Santander": ["Na Santander", "Przelew z Santandera"]
+    "K - Santander": ["Na Santander", "Przelew z Santandera"],
+    "K - Revolut": ["Na Revolut", "Wyciągamy z revoluta"],
+    "K - Rachunki": ["Na rachunki", "Przelew z rachunków"],
+    "K - Remont": ["Na remont", "Robimy remont"]
 }
 
 # =============================================
