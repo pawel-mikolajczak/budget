@@ -66,8 +66,10 @@ def main():
     wplywy = hist.process_items(excel_file_path, hist_service.wplywy_kategorie, "Wpływ")
     hist.store_wplywy(wplywy, database)
 
-    ex.save_item_to_excel(wplywy, "Wpływy")
-    # TODO: change way of summing up incoming cash --> SUM inlcuding accounts
+    test = database.select_data_via_script("scripts/queries/wplywy.sql", ["Wpływy"])
+
+    ex.save_data_to_excel(database.select_data("SELECT miesiac, kategoria, subkategoria, kwota FROM wplywy"),
+                          ["Miesiąc", "Kategoria", "Subkategoria", "Kwota"], "Wpływy")
     ex.save_data_to_excel(hist.process_sum_wplywy(database), ["Miesiąc", "Suma"], "Wpływy SUM")
 
     # ---------------

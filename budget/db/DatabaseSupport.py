@@ -26,7 +26,7 @@ class DatabaseSupport:
             cursor.close()
 
             self.create_table('scripts/create_tables/wydatki_mbank.sql')
-            self.create_table('scripts/create_tables/wplywy.sql')
+            self.create_table('scripts/create_tables/wplywy_mbank.sql')
             self.create_table('scripts/create_tables/konta.sql')
             self.create_table('scripts/create_tables/nieregularne.sql')
             self.create_table('scripts/create_tables/miesieczne.sql')

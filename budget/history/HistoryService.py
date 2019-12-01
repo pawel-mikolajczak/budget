@@ -122,7 +122,7 @@ class HistoryService:
             "   ("
             "       SELECT 'Wpływy' [typ], miesiac, kwota "
             "       FROM wplywy "
-            "       UNION "
+            "       UNION ALL"
             "       SELECT 'Wydatki' [typ], miesiac, kwota "
             "       FROM wydatki"
             "   ) x "
@@ -131,7 +131,7 @@ class HistoryService:
 
     def store_wplywy(self, wplywy, database: DatabaseSupport):
         for wplyw in wplywy:
-            query = "INSERT INTO wplywy ('miesiac', 'kategoria', 'subkategoria', 'kwota') VALUES ('{}','{}','{}',{})".format(
+            query = "INSERT INTO wplywy_mbank ('miesiac', 'kategoria', 'subkategoria', 'kwota') VALUES ('{}','{}','{}',{})".format(
                 wplyw.miesiac, wplyw.kategoria, wplyw.subkategoria, wplyw.kwota)
             database.insert_data(query, "Wpływ")
 
