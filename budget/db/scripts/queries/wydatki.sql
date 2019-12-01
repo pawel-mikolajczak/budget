@@ -6,6 +6,6 @@ FROM (
     UNION ALL
     SELECT date(k.data, 'Start of month') [miesiac], kategoria, podkategoria [subkategoria], kwota*-1 [kwota]
     FROM konta k
-    WHERE k.kategoria not in ('Admin', 'Transfery', 'Wpływy')
+    WHERE k.kategoria not in ('{}')
 )
 group by miesiac, kategoria, subkategoria

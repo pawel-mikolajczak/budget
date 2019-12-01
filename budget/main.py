@@ -51,7 +51,8 @@ def main():
     wydatki_mbank = hist.process_items(excel_file_path, hist_service.wydatki_kategorie, "Wydatek")
     hist.store_wydatki(wydatki_mbank, database)
 
-    database.select_data_via_script("scripts/queries/wydatki.sql")
+    subkategorie_string = ["', '".join(["Admin", "Transfery", "Wpływy"])]
+    database.select_data_via_script("scripts/queries/wydatki.sql", subkategorie_string)
     ex.save_data_to_excel(database.select_data("SELECT miesiac, kategoria, subkategoria, kwota FROM wydatki"), ["Miesiąc", "Kategoria", "Subkategoria", "Kwota"], "Wydatki")
 
     ex.save_data_to_excel(hist.process_kategorie(database), ["Kategoria"], "Kategorie")
