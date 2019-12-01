@@ -1,5 +1,5 @@
 CREATE TABLE monthly_budget_execution AS
-SELECT m.miesiac, ifnull(xx.kategoria, 'BLANK') [kategoria], ifnull(xx.subkategoria, 'BLANK') [subkategoria],  ifnull(xx.kwota, 0) [kwota]
+SELECT m.miesiac, ifnull(xx.kategoria, 'BLANK') [kategoria], ifnull(xx.subkategoria, 'BLANK') [subkategoria],  CAST(ifnull(xx.kwota, 0) AS REAL) [kwota]
 FROM miesiace m
 LEFT OUTER JOIN (
     SELECT

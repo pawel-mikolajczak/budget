@@ -3,5 +3,5 @@ CREATE TABLE wydatki_mbank (
  miesiac datetime NOT NULL,
  kategoria text NOT NULL,
  subkategoria text NOT NULL,
- kwota NUMERIC(10,2) NOT NULL
+ kwota real NOT NULL
 );

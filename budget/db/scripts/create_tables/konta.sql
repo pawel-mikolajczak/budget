@@ -3,8 +3,8 @@ CREATE TABLE konta (
  konto text NOT NULL,
  data datetime NOT NULL,
  opis text NOT NULL,
- kwota NUMERIC(10,2) NOT NULL,
- bilans NUMERIC(10,2) NOT NULL,
+ kwota real NOT NULL,
+ bilans real NOT NULL,
  kategoria text NOT NULL,
  podkategoria text NOT NULL
 );

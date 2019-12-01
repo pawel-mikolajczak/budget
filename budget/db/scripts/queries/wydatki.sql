@@ -1,5 +1,5 @@
 CREATE TABLE wydatki as
-SELECT date(miesiac, 'Start of month') [miesiac], kategoria, subkategoria, SUM(kwota) [kwota]
+SELECT miesiac [miesiac], kategoria, subkategoria, CAST(SUM(kwota) AS REAL)  [kwota]
 FROM (
     SELECT date(miesiac, 'Start of month') [miesiac], kategoria, subkategoria, kwota
     FROM wydatki_mbank

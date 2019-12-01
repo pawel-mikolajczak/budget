@@ -4,10 +4,10 @@ CREATE TABLE nieregularne (
  kategoria text NOT NULL,
  subkategoria text NOT NULL,
  detale text NOT NULL,
- minimum NUMERIC(10,2) NOT NULL,
- average NUMERIC(10,2) NOT NULL,
- maximum NUMERIC(10,2) NOT NULL,
- finally_paid NUMERIC(10,2) NULL,
+ minimum real NOT NULL,
+ average real NOT NULL,
+ maximum real NOT NULL,
+ finally_paid real NULL,
  final_paid_date datetime NULL,
  comments text NULL
 );

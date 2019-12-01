@@ -4,9 +4,9 @@ SELECT
     x.kategoria [kategoria],
     x.subkategoria [subkategoria],
     x.detale [detale],
-    x.minimum [min],
-    x.average [avg],
-    x.maximum [max]
+    CAST(x.minimum AS REAL) [min],
+    CAST(x.average AS REAL) [avg],
+    CAST(x.maximum AS REAL) [max]
 FROM dni d
     LEFT OUTER JOIN (
         SELECT
