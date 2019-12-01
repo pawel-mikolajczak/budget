@@ -1,7 +1,8 @@
+CREATE TABLE wydatki as
 SELECT date(miesiac, 'Start of month') [miesiac], kategoria, subkategoria, SUM(kwota) [kwota]
 FROM (
     SELECT date(miesiac, 'Start of month') [miesiac], kategoria, subkategoria, kwota
-    FROM wydatki
+    FROM wydatki_mbank
     UNION ALL
     SELECT date(k.data, 'Start of month') [miesiac], kategoria, podkategoria [subkategoria], kwota*-1 [kwota]
     FROM konta k

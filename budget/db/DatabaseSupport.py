@@ -25,7 +25,7 @@ class DatabaseSupport:
             logger.info("SQLite Database Version is: {}".format(record))
             cursor.close()
 
-            self.create_table('scripts/create_tables/wydatki.sql')
+            self.create_table('scripts/create_tables/wydatki_mbank.sql')
             self.create_table('scripts/create_tables/wplywy.sql')
             self.create_table('scripts/create_tables/konta.sql')
             self.create_table('scripts/create_tables/nieregularne.sql')

@@ -98,7 +98,7 @@ class HistoryService:
 
     def store_wydatki(self, wydatki, database: DatabaseSupport):
         for wydatek in wydatki:
-            query = "INSERT INTO wydatki ('miesiac', 'kategoria', 'subkategoria', 'kwota') VALUES ('{}','{}','{}',{})".format(
+            query = "INSERT INTO wydatki_mbank ('miesiac', 'kategoria', 'subkategoria', 'kwota') VALUES ('{}','{}','{}',{})".format(
                 wydatek.miesiac, wydatek.kategoria, wydatek.subkategoria, wydatek.kwota)
             database.insert_data(query, "Wydatek")
 

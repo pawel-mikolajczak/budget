@@ -51,7 +51,8 @@ def main():
     wydatki_mbank = hist.process_items(excel_file_path, hist_service.wydatki_kategorie, "Wydatek")
     hist.store_wydatki(wydatki_mbank, database)
 
-    ex.save_data_to_excel(database.select_data_via_script("scripts/queries/wydatki.sql"), ["Miesiąc", "Kategoria", "Subkategoria", "Kwota"], "Wydatki")
+    database.select_data_via_script("scripts/queries/wydatki.sql")
+    ex.save_data_to_excel(database.select_data("SELECT miesiac, kategoria, subkategoria, kwota FROM wydatki"), ["Miesiąc", "Kategoria", "Subkategoria", "Kwota"], "Wydatki")
 
     ex.save_data_to_excel(hist.process_kategorie(database), ["Kategoria"], "Kategorie")
     ex.save_data_to_excel(hist.process_subkategorie(database), ["Kategoria", "Subkategoria"], "Subkategorie")
@@ -66,6 +67,7 @@ def main():
     hist.store_wplywy(wplywy, database)
 
     ex.save_item_to_excel(wplywy, "Wpływy")
+    # TODO: change way of summing up incoming cash --> SUM inlcuding accounts
     ex.save_data_to_excel(hist.process_sum_wplywy(database), ["Miesiąc", "Suma"], "Wpływy SUM")
 
     # ---------------
