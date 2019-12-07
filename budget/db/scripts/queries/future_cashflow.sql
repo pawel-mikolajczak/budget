@@ -1,5 +1,6 @@
 create table cashflow_details as
 SELECT
+    x.konto [konto],
     d.dzien [data],
     x.kategoria [kategoria],
     x.subkategoria [subkategoria],
@@ -10,6 +11,7 @@ SELECT
 FROM dni d
     LEFT OUTER JOIN (
         SELECT
+            konto,
             data,
             kategoria,
             subkategoria,
@@ -21,6 +23,7 @@ FROM dni d
         WHERE final_paid_date = 'NaT'
         UNION ALL
         SELECT
+            konto,
             final_paid_date AS data,
             kategoria,
             subkategoria,
@@ -32,6 +35,7 @@ FROM dni d
         WHERE final_paid_date <> 'NaT'
         UNION ALL
         SELECT
+            konto,
             data,
             kategoria,
             subkategoria,
@@ -42,6 +46,7 @@ FROM dni d
         FROM miesieczne
         UNION ALL
         SELECT
+            'K - mBank' [konto],
             data,
             "Stan konta" [kategoria],
             "Stan konta" [subkategoria],

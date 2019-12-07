@@ -55,7 +55,7 @@ class FutureService:
         df = pd.read_excel(xslx, '%s' % irregular_tab)
 
         for index, row in df.iterrows():
-            i = IrregularItem(row["Data"], row["Kategoria"], row["Podkategoria"], row["Detale"], row["Minimum"],
+            i = IrregularItem(row["Konto"], row["Data"], row["Kategoria"], row["Podkategoria"], row["Detale"], row["Minimum"],
                               row["AVG"], row["Maximum"], row["Finalnie zapłacono"], row["Finalna data zakupu"],
                               row["Komentarz"])
             items.append(i)
@@ -65,8 +65,8 @@ class FutureService:
     def store_irregular_items(self, items: List[IrregularItem], database: DatabaseSupport):
         logger.info("Storing irregular items to database: {}...".format(items.__len__()))
         for item in items:
-            query = "INSERT INTO nieregularne ('data', 'kategoria', 'subkategoria', 'detale', 'minimum', 'average', 'maximum', 'finally_paid', 'final_paid_date', 'comments') VALUES ('{}','{}','{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(
-                item.data, item.kategoria, item.subkategoria, item.detale, item.minimum, item.avg, item.maximum,
+            query = "INSERT INTO nieregularne ('konto', 'data', 'kategoria', 'subkategoria', 'detale', 'minimum', 'average', 'maximum', 'finally_paid', 'final_paid_date', 'comments') VALUES ('{}', '{}','{}','{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(
+                item.konto, item.data, item.kategoria, item.subkategoria, item.detale, item.minimum, item.avg, item.maximum,
                 item.finally_paid, item.final_paid_date, item.comment)
             database.insert_data(query, "Irregular item")
         logger.info("Storing irregular items to database finished: {}...".format(items.__len__()))
@@ -78,7 +78,7 @@ class FutureService:
 
     def process_cashflow(self, database: DatabaseSupport):
         database.select_data_via_script("scripts/queries/future_cashflow.sql")
-        return database.select_data("SELECT data, kategoria, subkategoria, detale, min, avg, max FROM cashflow_details ORDER BY 1 ASC")
+        return database.select_data("SELECT data, kategoria, subkategoria, detale, min, avg, max FROM cashflow_details WHERE konto='K - mBank' ORDER BY 1 ASC")
 
     def read_monthly_budget(self, input_file_path):
         xslx = pd.ExcelFile(input_file_path)
@@ -102,7 +102,7 @@ class FutureService:
             monthly_budget.append(MonthBudgetItem(11, row["11Min"], row["11Avg"], row["11Max"]))
             monthly_budget.append(MonthBudgetItem(12, row["12Min"], row["12Avg"], row["12Max"]))
 
-            i = MonthlyItem(row["Kategoria"], row["Podkategoria"], row["Detale"], row["Dnia miesiąca"],
+            i = MonthlyItem(row["Konto"], row["Kategoria"], row["Podkategoria"], row["Detale"], row["Dnia miesiąca"],
                             row["Rok"], monthly_budget)
             items.append(i)
 
@@ -119,8 +119,8 @@ class FutureService:
                     day_of_month = int(item.day_of_the_month)
                 data = datetime.date(item.year, mb.miesiac, day_of_month)
 
-                query = "INSERT INTO miesieczne ('data', 'kategoria', 'subkategoria', 'detale', 'minimum', 'average', 'maximum') VALUES ('{}','{}','{}', '{}', '{}', '{}', '{}')".format(
-                    data, item.kategoria, item.subkategoria, item.detale, mb.min, mb.avg, mb.max)
+                query = "INSERT INTO miesieczne ('konto', 'data', 'kategoria', 'subkategoria', 'detale', 'minimum', 'average', 'maximum') VALUES ('{}','{}','{}','{}', '{}', '{}', '{}', '{}')".format(
+                    item.konto, data, item.kategoria, item.subkategoria, item.detale, mb.min, mb.avg, mb.max)
                 database.insert_data(query, "Monthly item")
         logger.info("Storing irregular items to database finished: {}...".format(items.__len__()))
 
@@ -151,8 +151,9 @@ class FutureService:
 
         for konto in transfery_kategorie.keys():
             subkategorie = transfery_kategorie[konto]
-            subkategorie_string = ["', '".join(subkategorie)]
-            account_results_per_month = database.select_data_via_script("scripts/queries/konta_cashflow.sql", subkategorie_string)
+            subkategorie_string = "', '".join(subkategorie)
+            parameters = [subkategorie_string, konto]
+            account_results_per_month = database.select_data_via_script("scripts/queries/konta_cashflow.sql", parameters)
             for result in account_results_per_month:
                 item = AccountCashflowItem(konto, result[0], result[1], result[2], result[3])
                 items.append(item)

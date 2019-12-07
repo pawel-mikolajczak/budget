@@ -20,7 +20,8 @@ class MonthBudgetItem():
 
 
 class MonthlyItem:
-    def __init__(self, kategoria, subkategoria, detale, day_of_the_month, year, monthly_budget:List[MonthBudgetItem]):
+    def __init__(self, konto, kategoria, subkategoria, detale, day_of_the_month, year, monthly_budget:List[MonthBudgetItem]):
+        self.konto = konto
         self.kategoria = kategoria
         self.subkategoria = subkategoria
         self.detale = detale
@@ -29,8 +30,8 @@ class MonthlyItem:
         self.monthly_budget = monthly_budget
 
     def __str__(self) -> str:
-        return "Kategoria={}; Subkategoria={}; Detale={}; Dzien miesiaca={}; Rok={}; Budzet={}".format(
-            self.kategoria, self.subkategoria, self.detale, self.day_of_the_month, self.year, self.monthly_budget)
+        return "Konto={}; Kategoria={}; Subkategoria={}; Detale={}; Dzien miesiaca={}; Rok={}; Budzet={}".format(
+            self.konto, self.kategoria, self.subkategoria, self.detale, self.day_of_the_month, self.year, self.monthly_budget)
 
     def __repr__(self) -> str:
         return self.__str__()

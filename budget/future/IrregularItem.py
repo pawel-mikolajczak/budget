@@ -6,8 +6,9 @@ logger.setLevel(logging.DEBUG)
 
 
 class IrregularItem:
-    def __init__(self, data, kategoria, subkategoria, detale, minimum, avg, maximum, finally_paid, final_paid_date,
+    def __init__(self, konto, data, kategoria, subkategoria, detale, minimum, avg, maximum, finally_paid, final_paid_date,
                  comment):
+        self.konto = konto
         self.data = data
         self.comment = comment
         self.final_paid_date = final_paid_date
@@ -20,12 +21,12 @@ class IrregularItem:
         self.kategoria = kategoria
 
         logger.debug(
-            "IrregularItem init {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(data, kategoria, subkategoria, detale,
+            "IrregularItem init {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(konto, data, kategoria, subkategoria, detale,
                                                                                minimum, avg, maximum, finally_paid,
                                                                                final_paid_date, comment))
 
     def __str__(self) -> str:
-        return "Data={}; Kategoria={}; Subkategoria={}; Detale={}; Minimum={}; AVG={}; Maximum={}".format(
+        return "Konto={}; Data={}; Kategoria={}; Subkategoria={}; Detale={}; Minimum={}; AVG={}; Maximum={}".format(
             self.get_date(self.data), self.kategoria, self.subkategoria, self.detale, self.minimum, self.avg,
             self.maximum)
 
