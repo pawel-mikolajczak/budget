@@ -21,6 +21,17 @@ FROM dni d
         WHERE final_paid_date = 'NaT'
         UNION ALL
         SELECT
+            final_paid_date AS data,
+            kategoria,
+            subkategoria,
+            detale,
+            finally_paid AS minimum,
+            finally_paid AS average,
+            finally_paid AS maximum
+        FROM nieregularne
+        WHERE final_paid_date <> 'NaT'
+        UNION ALL
+        SELECT
             data,
             kategoria,
             subkategoria,
